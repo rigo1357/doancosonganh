@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simple Laptop Shop</title>
+  <link rel="stylesheet" href="style.css">
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">LS</div>
+      <div>
+        <div style="font-weight:700">LaptopStore</div>
+        <div style="font-size:12px;color:var(--muted)">Shop laptop cơ bản</div>
+      </div>
+    </div>
+    <nav>
+      <a href="#">Trang chủ</a>
+      <a href="#">Sản phẩm</a>
+      <a href="#">Liên hệ</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="search">
+        <input id="search" placeholder="Tìm kiếm laptop (ví dụ: gaming, i7, 16GB)..." />
+      </div>
+      <div class="cart">
+        <div style="text-align:right">
+          <div style="font-weight:700">Giỏ hàng</div>
+          <div id="cart-count" style="font-size:12px;color:var(--muted)">0 sản phẩm</div>
+        </div>
+        <button class="btn secondary" onclick="openCart()">Xem</button>
+      </div>
+    </section>
+
+    <section class="grid" id="product-list">
+      <!-- Product cards inserted by JS -->
+    </section>
+  </main>
+
+  <footer>
+
+  </footer>
+
+  <script>
+    // Dữ liệu mẫu (thay bằng dữ liệu thật hoặc từ server)
+const products = [
+  {id:1, name:'Laptop Asus', price:15000000, desc:'Intel i5, 8GB RAM, 512GB SSD', img:'Image/Asus.webp'},
+  {id:2, name:'Laptop Dell', price:17000000, desc:'Intel i7, 16GB RAM, 512GB SSD', img:'Image/LaptopDell.webp'},
+  {id:3, name:'Laptop HP', price:16000000, desc:'Intel i5, 8GB RAM, 256GB SSD', img:'Image/HP.jpg'},
+  {id:4, name:'MacBook Air M1', price:24000000, desc:'Apple M1, 8GB RAM, 256GB SSD', img:'Image/MacBook.webp'},
+  {id:5, name:'Lenovo Ideapad', price:12000000, desc:'AMD Ryzen 5, 8GB RAM, 512GB SSD', img:'Image/Lenovo.webp'}
+];
+
+
+
+    let cart = [];
+
+    function money(v){ return v.toLocaleString('vi-VN') + ' ₫'; }
+
+    function renderProducts(list){
+      const container = document.getElementById('product-list');
+      container.innerHTML = '';
+      list.forEach(p => {
+        const card = document.createElement('div'); card.className='card';
+        card.innerHTML = `
+          <img src="${p.img}" alt="${p.name}" />
+          <div class="body">
+            <div class="title">${p.name}</div>
+            <div class="desc">${p.desc}</div>
+            <div class="price-row">
+              <div class="price">${money(p.price)}</div>
+              <div>
+                <button class="btn secondary" onclick="viewDetail(${p.id})">Xem</button>
+                <button class="btn" onclick="addToCart(${p.id})">Thêm vào giỏ</button>
+              </div>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      })
+    }
+
+    function addToCart(id){
+      const p = products.find(x=>x.id===id);
+      if(!p) return;
+      cart.push(p);
+      document.getElementById('cart-count').innerText = `${cart.length} sản phẩm`;
+      alert('Đã thêm: ' + p.name);
+    }
+
+    function viewDetail(id){
+      const p = products.find(x=>x.id===id);
+      if(!p) return;
+      alert(p.name + "\n" + p.desc + "\nGiá: " + money(p.price));
+    }
+
+    function openCart(){
+      if(cart.length===0) return alert('Giỏ hàng trống');
+      let text = 'Giỏ hàng:\n';
+      let total = 0;
+      cart.forEach((c,i)=>{ text += `${i+1}. ${c.name} - ${money(c.price)}\n`; total += c.price });
+      text += '----\nTổng: ' + money(total);
+      alert(text);
+    }
+
+    // Tìm kiếm
+    document.getElementById('search').addEventListener('input', (e)=>{
+      const q = e.target.value.trim().toLowerCase();
+      if(!q) return renderProducts(products);
+      const filtered = products.filter(p => (p.name + ' ' + p.desc).toLowerCase().includes(q));
+      renderProducts(filtered);
+    });
+
+    // Khởi tạo
+    renderProducts(products);
+
+  </script>
+</body>
+</html>

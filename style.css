@@ -1,0 +1,32 @@
+:root{ --accent:#0d6efd; --muted:#666; --card-bg:#fff; --bg:#f4f6fb }
+*{box-sizing:border-box}
+body{font-family:Inter, system-ui, Arial, sans-serif; margin:0; background:var(--bg); color:#111}
+header{background:linear-gradient(90deg,#fff 0,#f8fbff 100%); padding:18px 24px; box-shadow:0 2px 6px rgba(10,10,20,0.03); display:flex; align-items:center; justify-content:space-between}
+.brand{display:flex; gap:12px; align-items:center}
+.logo{width:44px; height:44px; border-radius:8px; background:var(--accent); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700}
+nav a{margin-left:16px; color:var(--muted); text-decoration:none}
+
+.container{max-width:1100px; margin:28px auto; padding:0 18px}
+.hero{display:flex; gap:22px; align-items:center; margin-bottom:22px}
+.hero .search{flex:1}
+.search input{width:100%; padding:12px 14px; border-radius:10px; border:1px solid #e2e8f0}
+.hero .cart{display:flex; gap:10px; align-items:center}
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:18px}
+
+.card{background:var(--card-bg); border-radius:12px; overflow:hidden; box-shadow:0 6px 18px rgba(11,20,40,0.06); display:flex; flex-direction:column}
+.card img{width:100%; height:160px; object-fit:cover; display:block}
+.card .body{padding:12px 14px; flex:1; display:flex; flex-direction:column}
+.title{font-weight:600; margin-bottom:6px}
+.desc{font-size:13px; color:var(--muted); margin-bottom:auto}
+.price-row{display:flex; justify-content:space-between; align-items:center; margin-top:12px}
+.price{font-weight:700}
+.btn{background:var(--accent); color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer}
+.btn.secondary{background:transparent; color:var(--accent); border:1px solid rgba(13,110,253,0.12)}
+
+footer{max-width:1100px; margin:36px auto; padding:18px; color:var(--muted); text-align:center}
+
+/* responsive tweaks */
+@media (max-width:640px){
+  .hero{flex-direction:column; align-items:stretch}
+  .card img{height:140px}
+}
