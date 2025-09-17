@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Đăng nhập / Đăng ký - LaptopStore</title>
+  <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">LS</div>
+      <div>
+        <div style="font-weight:700">LaptopStore</div>
+        <div style="font-size:12px;color:var(--muted)">Shop laptop cơ bản</div>
+      </div>
+    </div>
+    <nav>
+      <a href="index.html">Trang chủ</a>
+      <a href="#product-list">Sản phẩm</a>
+      <a href="Login.html" class="active">Đăng nhập/Đăng ký</a>
+      <a href="#">Liên hệ</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="auth-container">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="showTab('login')">Đăng nhập</button>
+        <button class="auth-tab" id="tab-register" onclick="showTab('register')">Đăng ký</button>
+      </div>
+      <div id="auth-msg"></div>
+      <!-- Đăng nhập -->
+      <form id="login-form" class="auth-form">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" required placeholder="Email @gmail.com">
+        <label for="login-password">Mật khẩu</label>
+        <input type="password" id="login-password" required placeholder="Nhập mật khẩu">
+        <button type="submit" class="btn">Đăng nhập</button>
+      </form>
+      <!-- Đăng ký -->
+      <form id="register-form" class="auth-form" style="display:none">
+        <label for="reg-email">Email</label>
+        <input type="email" id="reg-email" required placeholder="Email @gmail.com">
+        <label for="reg-password">Mật khẩu</label>
+        <input type="password" id="reg-password" required placeholder="Tạo mật khẩu">
+        <button type="submit" class="btn secondary">Đăng ký</button>
+      </form>
+      <!-- Xác thực OTP -->
+      <form id="otp-form" class="auth-form" style="display:none">
+        <label for="otp-input">Nhập mã OTP vừa gửi đến email</label>
+        <input type="text" id="otp-input" required placeholder="Nhập mã OTP">
+        <button type="submit" class="btn">Xác thực OTP</button>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container" style=" text-align:center; font-size:14px; color:#666;">
+      &copy; 2025 LaptopStore. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    let pendingUser = null;
+    let otpCode = null;
+
+    function showTab(tab) {
+      document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+      document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+      document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none';
+      document.getElementById('register-form').style.display = tab === 'register' ? 'block' : 'none';
+      document.getElementById('otp-form').style.display = 'none';
+      document.getElementById('auth-msg').innerHTML = '';
+    }
+
+    let users = JSON.parse(localStorage.getItem('users') || '[]');
+    users.push({email: 'zuess1357@gmail.com', password: '123456'});
+    localStorage.setItem('users', JSON.stringify(users));
+    // Đăng ký
+    document.getElementById('register-form').onsubmit = function(e) {
+      e.preventDefault();
+      const email = document.getElementById('reg-email').value.trim();
+      const password = document.getElementById('reg-password').value;
+      if(!email.endsWith('@gmail.com')) {
+        showMsg('Vui lòng sử dụng email @gmail.com');
+        return;
+      }
+      if(password.length < 6) {
+        showMsg('Mật khẩu phải từ 6 ký tự');
+        return;
+      }
+      let users = JSON.parse(localStorage.getItem('users') || '[]');
+      if(users.find(u => u.email === email)) {
+        showMsg('Email đã được đăng ký');
+        return;
+      }
+      // Sinh OTP
+      otpCode = Math.floor(100000 + Math.random()*900000).toString();
+      pendingUser = {email, password};
+      showMsg('Mã OTP của bạn là: <b>' + otpCode + '</b> (demo, kiểm tra email)', true);
+      document.getElementById('register-form').style.display = 'none';
+      document.getElementById('otp-form').style.display = 'block';
+    };
+
+    // Xác thực OTP
+    document.getElementById('otp-form').onsubmit = function(e) {
+      e.preventDefault();
+      const otp = document.getElementById('otp-input').value.trim();
+      if(otp !== otpCode) {
+        showMsg('Mã OTP không đúng');
+        return;
+      }
+      let users = JSON.parse(localStorage.getItem('users') || '[]');
+      users.push(pendingUser);
+      localStorage.setItem('users', JSON.stringify(users));
+      showMsg('Đăng ký thành công!', true);
+      setTimeout(()=>showTab('login'), 1200);
+      pendingUser = null; otpCode = null;
+      document.getElementById('otp-form').reset();
+    };
+
+    // Đăng nhập
+    document.getElementById('login-form').onsubmit = function(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      if(!email.endsWith('@gmail.com')) {
+        showMsg('Vui lòng sử dụng email @gmail.com');
+        return;
+      }
+      let users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(u => u.email === email && u.password === password);
+      if(!user) {
+        showMsg('Email hoặc mật khẩu không đúng');
+        return;
+      }
+      showMsg('Đăng nhập thành công!', true);
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      setTimeout(()=>window.location.href='index.html', 1200);
+    };
+
+    function showMsg(msg, success=false) {
+      document.getElementById('auth-msg').innerHTML = `<div class="${success?'auth-success':'auth-msg'}">${msg}</div>`;
+    }
+    
+  </script>
+</body>
+</html>

@@ -5,35 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Simple Laptop Shop</title>
   <link rel="stylesheet" href="style.css">
-  </style>
 </head>
 <body>
   <header>
-    <div class="brand">
-      <div class="logo">LS</div>
-      <div>
-        <div style="font-weight:700">LaptopStore</div>
-        <div style="font-size:12px;color:var(--muted)">Shop laptop cơ bản</div>
-      </div>
+    <!-- ...existing code... -->
+<header>
+  <div class="brand">
+    <div class="logo">LS</div>
+    <div>
+      <div style="font-weight:700">LaptopStore</div>
+      <div style="font-size:12px;color:var(--muted)">Shop laptop cơ bản</div>
     </div>
-    <nav>
-      <a href="#">Trang chủ</a>
-      <a href="#">Sản phẩm</a>
-      <a href="#">Liên hệ</a>
-    </nav>
+  </div>
+  <nav>
+    <a href="index.html">Trang chủ</a>
+    <a href="#product-list">Sản phẩm</a>
+    <a href="Login.html" id="login-link">Đăng nhập/Đăngký</a>
+    <a href="#">Liên hệ</a>
+    <span id="user-info" style="margin-left:24px;color:#0056b3;font-weight:500"></span>
+  </nav>
+</header>
+<!-- ...existing code... -->
+<script>
+  // ...existing code...
+
+  // Hiển thị tên tài khoản nếu đã đăng nhập
+  const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+  if(user && user.email){
+    document.getElementById('user-info').innerText = 'Xin chào, ' + user.email;
+    document.getElementById('login-link').style.display = 'none';
+  }
+
+  // ...existing code...
+</script>
+<!-- ...existing code... -->
   </header>
 
   <main class="container">
     <section class="hero">
       <div class="search">
-        <input id="search" placeholder="Tìm kiếm laptop (ví dụ: gaming, i7, 16GB)..." />
+         <input id="search" placeholder="Tìm kiếm laptop (ví dụ: gaming, i7, 16GB)..." />
+         <div id="suggestions" style="position:relative;z-index:10"></div>
       </div>
       <div class="cart">
         <div style="text-align:right">
           <div style="font-weight:700">Giỏ hàng</div>
           <div id="cart-count" style="font-size:12px;color:var(--muted)">0 sản phẩm</div>
         </div>
-        <button class="btn secondary" onclick="openCart()">Xem</button>
+        <button class="btn secondary" onclick="window.location.href='cart.html'">Xem</button>
       </div>
     </section>
 
@@ -43,22 +62,24 @@
   </main>
 
   <footer>
-
+    <div class="container" style=" text-align:center; font-size:14px; color:#666;">
+      &copy; 2025 LaptopStore. All rights reserved.
+    </div>
   </footer>
 
   <script>
-    // Dữ liệu mẫu (thay bằng dữ liệu thật hoặc từ server)
-const products = [
-  {id:1, name:'Laptop Asus', price:15000000, desc:'Intel i5, 8GB RAM, 512GB SSD', img:'Image/Asus.webp'},
-  {id:2, name:'Laptop Dell', price:17000000, desc:'Intel i7, 16GB RAM, 512GB SSD', img:'Image/LaptopDell.webp'},
-  {id:3, name:'Laptop HP', price:16000000, desc:'Intel i5, 8GB RAM, 256GB SSD', img:'Image/HP.jpg'},
-  {id:4, name:'MacBook Air M1', price:24000000, desc:'Apple M1, 8GB RAM, 256GB SSD', img:'Image/MacBook.webp'},
-  {id:5, name:'Lenovo Ideapad', price:12000000, desc:'AMD Ryzen 5, 8GB RAM, 512GB SSD', img:'Image/Lenovo.webp'}
-];
+    // Dữ liệu mẫu
+    const products = [
+      {id:1, name:'Laptop Asus', price:15000000, desc:'Intel i5, 8GB RAM, 512GB SSD', img:'Image/Asus.webp'},
+      {id:2, name:'Laptop Dell', price:17000000, desc:'Intel i7, 16GB RAM, 512GB SSD', img:'Image/LaptopDell.webp'},
+      {id:3, name:'Laptop HP', price:16000000, desc:'Intel i5, 8GB RAM, 256GB SSD', img:'Image/HP.jpg'},
+      {id:4, name:'MacBook Air M1', price:24000000, desc:'Apple M1, 8GB RAM, 256GB SSD', img:'Image/MacBook.webp'},
+      {id:5, name:'Lenovo Ideapad', price:12000000, desc:'AMD Ryzen 5, 8GB RAM, 512GB SSD', img:'Image/Lenovo.webp'}
+    ];
 
-
-
-    let cart = [];
+    // Giỏ hàng
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    document.getElementById('cart-count').innerText = `${cart.length} sản phẩm`;
 
     function money(v){ return v.toLocaleString('vi-VN') + ' ₫'; }
 
@@ -90,6 +111,7 @@ const products = [
       if(!p) return;
       cart.push(p);
       document.getElementById('cart-count').innerText = `${cart.length} sản phẩm`;
+      localStorage.setItem('cart', JSON.stringify(cart));
       alert('Đã thêm: ' + p.name);
     }
 
@@ -99,26 +121,29 @@ const products = [
       alert(p.name + "\n" + p.desc + "\nGiá: " + money(p.price));
     }
 
-    function openCart(){
-      if(cart.length===0) return alert('Giỏ hàng trống');
-      let text = 'Giỏ hàng:\n';
-      let total = 0;
-      cart.forEach((c,i)=>{ text += `${i+1}. ${c.name} - ${money(c.price)}\n`; total += c.price });
-      text += '----\nTổng: ' + money(total);
-      alert(text);
-    }
-
     // Tìm kiếm
     document.getElementById('search').addEventListener('input', (e)=>{
       const q = e.target.value.trim().toLowerCase();
-      if(!q) return renderProducts(products);
+      const suggestionsDiv = document.getElementById('suggestions');
+      if(!q) {
+        suggestionsDiv.innerHTML = '';
+        return renderProducts(products);
+      }
       const filtered = products.filter(p => (p.name + ' ' + p.desc).toLowerCase().includes(q));
       renderProducts(filtered);
+
+      // Gợi ý sản phẩm
+      if(filtered.length > 0) {
+        suggestionsDiv.innerHTML = filtered.map(p => 
+          `<div class="suggestion-item" style="background:#fff;border-bottom:1px solid #eee;padding:4px;cursor:pointer" onclick="document.getElementById('search').value='${p.name}';document.getElementById('suggestions').innerHTML='';">${p.name}</div>`
+        ).join('');
+      } else {
+        suggestionsDiv.innerHTML = '<div style="padding:4px;color:#888">Không tìm thấy sản phẩm phù hợp</div>';
+      }
     });
 
     // Khởi tạo
     renderProducts(products);
-
   </script>
 </body>
 </html>
