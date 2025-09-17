@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Giỏ hàng - LaptopStore</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">LS</div>
+      <div>
+        <div style="font-weight:700">LaptopStore</div>
+        <div style="font-size:12px;color:var(--muted)">Shop laptop cơ bản</div>
+      </div>
+    </div>
+    <nav>
+      <a href="index.html">Trang chủ</a>
+      <a href="index.html#product-list">Sản phẩm</a>
+      <a href="#">Liên hệ</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2>Giỏ hàng của bạn</h2>
+    <div id="cart-list"></div>
+    <hr>
+    <div id="cart-total" style="font-weight:700;margin-top:8px"></div>
+    <div style="margin-top:16px">
+      <button onclick="window.location.href='index.html'">Tiếp tục mua sắm</button>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container" style=" text-align:center; font-size:14px; color:#666;">
+      &copy; 2025 LaptopStore. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    function money(v){ return v.toLocaleString('vi-VN') + ' ₫'; }
+
+    function renderCart(){
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const listDiv = document.getElementById('cart-list');
+      const totalDiv = document.getElementById('cart-total');
+
+      if(cart.length === 0) {
+        listDiv.innerHTML = '<div>Giỏ hàng trống.</div>';
+        totalDiv.innerText = '';
+        return;
+      }
+
+      let total = 0;
+      listDiv.innerHTML = cart.map((c,i) => {
+        total += c.price;
+        return `
+          <div style="margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+            <span>${i+1}. ${c.name} - ${money(c.price)}</span>
+            <button onclick="removeFromCart(${i})" style="margin-left:8px">Xóa</button>
+          </div>
+        `;
+      }).join('');
+      totalDiv.innerText = "Tổng: " + money(total);
+    }
+
+    function removeFromCart(index){
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      cart.splice(index,1); // xóa sản phẩm theo index
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    renderCart();
+  </script>
+</body>
+</html>
