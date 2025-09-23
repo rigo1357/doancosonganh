@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tất cả sản phẩm - PPTLaptop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="brand">
+        <div class="logo">PL</div>
+        <div>
+          <div style="font-weight:700">PPTLaptop</div>
+          <div style="font-size:12px;color:var(--muted)">Mua laptop - giao tận nơi</div>
+        </div>
+      </div>
+      <nav>
+        <a href="index.html">Trang chủ</a>
+        <a href="products.html">Sản phẩm</a>
+        <a href="contact.html">Liên hệ</a>
+        <a href="cart.html">Giỏ hàng</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h3>Danh sách sản phẩm</h3>
+
+    <div class="controls">
+      <select id="filter-brand" class="select">
+        <option value="">Tất cả hãng</option>
+      </select>
+
+      <select id="sort" class="select">
+        <option value="default">Sắp xếp</option>
+        <option value="price-asc">Giá: Thấp → Cao</option>
+        <option value="price-desc">Giá: Cao → Thấp</option>
+      </select>
+
+      <input id="filter-min" class="input" placeholder="Giá từ (VNĐ)" />
+      <input id="filter-max" class="input" placeholder="Giá đến (VNĐ)" />
+      <input id="q" class="input" placeholder="Tìm kiếm..." style="flex:1" />
+      <button class="btn" id="apply-filter">Áp dụng</button>
+    </div>
+
+    <div class="grid" id="all-products"></div>
+  </main>
+
+  <footer>
+  <div class="container footer-grid">
+    <div>
+      <h4>Liên hệ</h4>
+      <p>📞 0971 476 878</p>
+      <p>📧 pptlaptop@gmail.com</p>
+    </div>
+    <div>
+      <h4>Địa chỉ</h4>
+      <p class="small text-muted">06 Trần Văn Ơn, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam</p>
+      <div style="margin-top:8px">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.996246850356!2d106.6747335!3d10.979613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d1276f4b7577%3A0x54075879a0f2301!2s06%20Tr%E1%BA%A7n%20V%C4%83n%20%C6%A0n%2C%20Ph%C3%BA%20Ho%C3%A0%2C%20Th%E1%BB%A7%20D%E1%BA%A7u%20M%E1%BB%99t%2C%20B%C3%ACnh%20D%C6%B0%C6%A1ng%2C%20Vi%E1%BB%87t%20Nam!5e0!3m2!1svi!2s!4v1727111111111!5m2!1svi!2s"
+          width="250"
+          height="180"
+          style="border:0;border-radius:8px;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phần bản quyền căn giữa -->
+  <div style="text-align:center; color:#888; margin:12px auto 0; font-size:13px; width:100%;">
+    &copy; 2025 PPTLaptop. All rights reserved.
+  </div>
+</footer>
+  <script>
+    const products = [
+      {id:1, name:'Asus TUF Gaming A15', brand:'Asus', price:24800000, desc:'Ryzen 7, 16GB RAM, RTX3050, 512GB SSD', img:'Image/Asus.webp'},
+      {id:2, name:'Dell Inspiron 15', brand:'Dell', price:16800000, desc:'Intel i5, 8GB RAM, 256GB SSD', img:'Image/LaptopDell.webp'},
+      {id:3, name:'HP Pavilion 14', brand:'HP', price:14900000, desc:'Intel i3, 8GB RAM, 256GB SSD', img:'Image/HP.jpg'},
+      {id:4, name:'MacBook Air M2', brand:'Apple', price:27900000, desc:'Apple M2, 8GB, 256GB SSD', img:'Image/MacBook.webp'},
+      {id:5, name:'Lenovo IdeaPad 3', brand:'Lenovo', price:11900000, desc:'Ryzen 5, 8GB RAM, 512GB SSD', img:'Image/Lenovo.webp'},
+      {id:6, name:'Asus Vivobook 15', brand:'Asus', price:12900000, desc:'Intel i5, 8GB RAM, 512GB SSD', img:'Image/Asus.webp'}
+    ];
+
+    const container = document.getElementById('all-products');
+    const brandSelect = document.getElementById('filter-brand');
+    const sortSelect = document.getElementById('sort');
+    const qInput = document.getElementById('q');
+    const minInput = document.getElementById('filter-min');
+    const maxInput = document.getElementById('filter-max');
+
+    function money(v){ return v.toLocaleString('vi-VN') + ' ₫'; }
+
+    function populateBrands(){
+      const brands = Array.from(new Set(products.map(p=>p.brand)));
+      brands.forEach(b=>{
+        const opt = document.createElement('option'); opt.value=b; opt.innerText=b;
+        brandSelect.appendChild(opt);
+      });
+    }
+
+    function render(list){
+      container.innerHTML = '';
+      list.forEach(p=>{
+        const c = document.createElement('div'); c.className='card';
+        c.innerHTML = `
+          <img src="${p.img}" alt="${p.name}" />
+          <div class="title">${p.name}</div>
+          <div class="desc">${p.desc} <span class="small text-muted">(${p.brand})</span></div>
+          <div class="price-row">
+            <div class="price">${money(p.price)}</div>
+            <div>
+              <button class="btn secondary" onclick="view(${p.id})">Xem</button>
+              <button class="btn" onclick="add(${p.id})">Thêm</button>
+            </div>
+          </div>
+        `;
+        container.appendChild(c);
+      });
+    }
+
+    function applyFilters(){
+      let list = products.slice();
+      const brand = brandSelect.value;
+      const q = qInput.value.trim().toLowerCase();
+      const min = parseInt(minInput.value.replace(/\D/g,'')) || 0;
+      const max = parseInt(maxInput.value.replace(/\D/g,'')) || Infinity;
+
+      if(brand) list = list.filter(p=>p.brand===brand);
+      if(q) list = list.filter(p=> (p.name + ' ' + p.desc).toLowerCase().includes(q));
+      list = list.filter(p=> p.price >= min && p.price <= max);
+
+      const sort = sortSelect.value;
+      if(sort === 'price-asc') list.sort((a,b)=>a.price-b.price);
+      if(sort === 'price-desc') list.sort((a,b)=>b.price-a.price);
+
+      render(list);
+    }
+
+    function add(id){
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const p = products.find(x=>x.id===id);
+      cart.push({...p, qty:1});
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert('Đã thêm: ' + p.name);
+    }
+    function view(id){ window.location.href = 'product-detail.html?id=' + id; }
+
+    document.getElementById('apply-filter').addEventListener('click', applyFilters);
+
+    populateBrands();
+    render(products);
+  </script>
+</body>
+</html>

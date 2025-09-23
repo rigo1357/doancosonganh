@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="vi">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Chi tiết sản phẩm - PPTLaptop</title><link rel="stylesheet" href="style.css"></head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="brand"><div class="logo">PL</div></div>
+      <nav>
+        <a href="index.html">Trang chủ</a>
+        <a href="products.html">Sản phẩm</a>
+        <a href="cart.html">Giỏ hàng</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="product-area"></div>
+
+    <h4>Sản phẩm liên quan</h4>
+    <div class="grid" id="related"></div>
+  </main>
+
+  <footer>
+  <div class="container footer-grid">
+    <div>
+      <h4>Liên hệ</h4>
+      <p>📞 0971 476 878</p>
+      <p>📧 pptlaptop@gmail.com</p>
+    </div>
+    <div>
+      <h4>Địa chỉ</h4>
+      <p class="small text-muted">06 Trần Văn Ơn, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam</p>
+      <div style="margin-top:8px">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.996246850356!2d106.6747335!3d10.979613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d1276f4b7577%3A0x54075879a0f2301!2s06%20Tr%E1%BA%A7n%20V%C4%83n%20%C6%A0n%2C%20Ph%C3%BA%20Ho%C3%A0%2C%20Th%E1%BB%A7%20D%E1%BA%A7u%20M%E1%BB%99t%2C%20B%C3%ACnh%20D%C6%B0%C6%A1ng%2C%20Vi%E1%BB%87t%20Nam!5e0!3m2!1svi!2s!4v1727111111111!5m2!1svi!2s"
+          width="250"
+          height="180"
+          style="border:0;border-radius:8px;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phần bản quyền căn giữa -->
+  <div style="text-align:center; color:#888; margin:12px auto 0; font-size:13px; width:100%;">
+    &copy; 2025 PPTLaptop. All rights reserved.
+  </div>
+</footer>
+  <script>
+    const products = [
+      {id:1, name:'Asus TUF Gaming A15', brand:'Asus', price:24800000, desc:'Ryzen 7, 16GB RAM, RTX3050, 512GB SSD', img:'Image/Asus.webp', imgs:['Image/Asus.webp','Image/Asus.webp']},
+      {id:2, name:'Dell Inspiron 15', brand:'Dell', price:16800000, desc:'Intel i5, 8GB RAM, 256GB SSD', img:'Image/LaptopDell.webp', imgs:['Image/LaptopDell.webp']},
+      {id:3, name:'HP Pavilion 14', brand:'HP', price:14900000, desc:'Intel i3, 8GB RAM, 256GB SSD', img:'Image/HP.jpg', imgs:['Image/HP.jpg']},
+      {id:4, name:'MacBook Air M2', brand:'Apple', price:27900000, desc:'Apple M2, 8GB, 256GB SSD', img:'Image/MacBook.webp', imgs:['Image/MacBook.webp']},
+      {id:5, name:'Lenovo IdeaPad 3', brand:'Lenovo', price:11900000, desc:'Ryzen 5, 8GB RAM, 512GB SSD', img:'Image/Lenovo.webp', imgs:['Image/Lenovo.webp']},
+      {id:6, name:'Asus Vivobook 15', brand:'Asus', price:12900000, desc:'Intel i5, 8GB RAM, 512GB SSD', img:'Image/Asus.webp', imgs:['Image/Asus.webp']}
+    ];
+
+    function money(v){ return v.toLocaleString('vi-VN') + ' ₫'; }
+
+    // get id from URL
+    const params = new URLSearchParams(location.search);
+    const id = parseInt(params.get('id')) || 1;
+    const p = products.find(x=>x.id===id) || products[0];
+
+    const area = document.getElementById('product-area');
+    area.innerHTML = `
+      <div class="detail">
+        <div class="gallery">
+          <img id="main-img" src="${p.img}" alt="${p.name}" style="width:100%;height:320px;object-fit:contain;border-radius:8px" />
+          <div class="thumbs">
+            ${p.imgs.map((im,idx)=>`<img class="thumb" src="${im}" data-src="${im}" onclick="document.getElementById('main-img').src=this.dataset.src">`).join('')}
+          </div>
+        </div>
+        <div>
+          <div style="font-size:20px;font-weight:700">${p.name}</div>
+          <div class="small text-muted" style="margin:6px 0">${p.brand} • ${p.desc}</div>
+          <div style="font-size:18px;color:var(--primary);font-weight:700;margin:12px 0">${money(p.price)}</div>
+
+          <div style="display:flex;gap:8px">
+            <button class="btn" id="add-cart">Thêm vào giỏ</button>
+            <button class="btn secondary" onclick="location.href='contact.html'">Hỏi dịch vụ</button>
+          </div>
+
+          <hr style="margin:14px 0">
+          <h4>Thông số kỹ thuật</h4>
+          <ul class="small text-muted">
+            <li>CPU: mô tả CPU</li>
+            <li>RAM: 8GB / 16GB</li>
+            <li>Ổ cứng: SSD 256GB / 512GB</li>
+            <li>Màn hình: 14" - 15.6"</li>
+          </ul>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('add-cart').addEventListener('click', ()=>{
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      cart.push({...p, qty:1});
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert('Đã thêm ' + p.name);
+    });
+
+    // related (by brand)
+    const related = products.filter(x=>x.brand === p.brand && x.id !== p.id).slice(0,4);
+    const relDiv = document.getElementById('related');
+    related.forEach(r=>{
+      const c = document.createElement('div'); c.className='card';
+      c.innerHTML = `<img src="${r.img}" /><div class="title">${r.name}</div><div class="price">${money(r.price)}</div><div style="margin-top:8px"><button class="btn secondary" onclick="location.href='product-detail.html?id=${r.id}'">Xem</button></div>`;
+      relDiv.appendChild(c);
+    });
+  </script>
+</body>
+</html>

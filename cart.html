@@ -1,76 +1,118 @@
 <!doctype html>
 <html lang="vi">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Giỏ hàng - LaptopStore</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Giỏ hàng - PPTLaptop</title><link rel="stylesheet" href="style.css"></head>
 <body>
-  <header>
-    <div class="brand">
-      <div class="logo">LS</div>
-      <div>
-        <div style="font-weight:700">PPTLaptop</div>
-        <div style="font-size:12px;color:var(--muted)">Shop PPTLaptop</div>
+  <header class="header">
+<div class="container">
+      <div class="brand">
+        <div class="logo">PL</div>
+        <div>
+          <div style="font-weight:700">PPTLaptop</div>
+          <div style="font-size:12px;color:var(--muted)">Mua laptop - giao tận nơi</div>
+        </div>
       </div>
+      <nav>
+        <a href="index.html">Trang chủ</a>
+        <a href="products.html">Sản phẩm</a>
+        <a href="contact.html">Liên hệ</a>
+      </nav>
     </div>
-    <nav>
-      <a href="index.html">Trang chủ</a>
-      <a href="index.html#product-list">Sản phẩm</a>
-      <a href="#">Liên hệ</a>
-    </nav>
   </header>
 
   <main class="container">
-    <h2>Giỏ hàng của bạn</h2>
+    <h3>Giỏ hàng của bạn</h3>
     <div id="cart-list"></div>
-    <hr>
-    <div id="cart-total" style="font-weight:700;margin-top:8px"></div>
-    <div style="margin-top:16px">
-      <button onclick="window.location.href='index.html'">Tiếp tục mua sắm</button>
+    <div style="margin-top:12px;display:flex;justify-content:flex-end;gap:12px;align-items:center">
+      <div id="cart-total" style="font-weight:700"></div>
+      <button class="btn" id="checkout">Thanh toán</button>
     </div>
   </main>
 
   <footer>
-    <div class="container" style=" text-align:center; font-size:14px; color:#666;">
-      &copy; 2025 LaptopStore. All rights reserved.
+  <div class="container footer-grid">
+    <div>
+      <h4>Liên hệ</h4>
+      <p>📞 0971 476 878</p>
+      <p>📧 pptlaptop@gmail.com</p>
     </div>
-  </footer>
+    <div>
+      <h4>Địa chỉ</h4>
+      <p class="small text-muted">06 Trần Văn Ơn, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam</p>
+      <div style="margin-top:8px">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.996246850356!2d106.6747335!3d10.979613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d1276f4b7577%3A0x54075879a0f2301!2s06%20Tr%E1%BA%A7n%20V%C4%83n%20%C6%A0n%2C%20Ph%C3%BA%20Ho%C3%A0%2C%20Th%E1%BB%A7%20D%E1%BA%A7u%20M%E1%BB%99t%2C%20B%C3%ACnh%20D%C6%B0%C6%A1ng%2C%20Vi%E1%BB%87t%20Nam!5e0!3m2!1svi!2s!4v1727111111111!5m2!1svi!2s"
+          width="250"
+          height="180"
+          style="border:0;border-radius:8px;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </div>
 
+  <!-- Phần bản quyền căn giữa -->
+  <div style="text-align:center; color:#888; margin:12px auto 0; font-size:13px; width:100%;">
+    &copy; 2025 PPTLaptop. All rights reserved.
+  </div>
+</footer>
   <script>
     function money(v){ return v.toLocaleString('vi-VN') + ' ₫'; }
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
     function renderCart(){
-      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-      const listDiv = document.getElementById('cart-list');
-      const totalDiv = document.getElementById('cart-total');
-
-      if(cart.length === 0) {
-        listDiv.innerHTML = '<div>Giỏ hàng trống.</div>';
-        totalDiv.innerText = '';
+      const list = document.getElementById('cart-list');
+      list.innerHTML = '';
+      if(cart.length===0){
+        list.innerHTML = '<div class="small text-muted">Giỏ hàng trống. <a href="products.html">Xem sản phẩm</a></div>';
+        document.getElementById('cart-total').innerText = '';
         return;
       }
-
       let total = 0;
-      listDiv.innerHTML = cart.map((c,i) => {
-        total += c.price;
-        return `
-          <div style="margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
-            <span>${i+1}. ${c.name} - ${money(c.price)}</span>
-            <button onclick="removeFromCart(${i})" style="margin-left:8px">Xóa</button>
+      cart.forEach((c, idx)=>{
+        total += (c.price * (c.qty || 1));
+        const row = document.createElement('div'); row.className='cart-row';
+        row.innerHTML = `
+          <div style="display:flex;gap:12px;align-items:center">
+            <img src="${c.img}" style="width:78px;height:58px;object-fit:contain;border-radius:8px" />
+            <div>
+              <div style="font-weight:600">${c.name}</div>
+              <div class="small text-muted">${c.desc}</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div class="qty">
+              <button onclick="changeQty(${idx}, -1)" style="padding:6px;border-radius:6px;border:1px solid #eee;background:#fff">-</button>
+              <div style="min-width:28px;text-align:center">${c.qty || 1}</div>
+              <button onclick="changeQty(${idx}, 1)" style="padding:6px;border-radius:6px;border:1px solid #eee;background:#fff">+</button>
+            </div>
+            <div style="min-width:110px;text-align:right">${money((c.qty||1)*c.price)}</div>
+            <div><button onclick="removeItem(${idx})" style="background:#fff;border:1px solid #f1c0c0;padding:6px;border-radius:8px;color:#b00000">Xóa</button></div>
           </div>
         `;
-      }).join('');
-      totalDiv.innerText = "Tổng: " + money(total);
+        list.appendChild(row);
+      });
+      document.getElementById('cart-total').innerText = 'Tổng: ' + money(total);
     }
 
-    function removeFromCart(index){
-      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-      cart.splice(index,1); // xóa sản phẩm theo index
+    function changeQty(i, delta){
+      cart[i].qty = Math.max(1, (cart[i].qty || 1) + delta);
       localStorage.setItem('cart', JSON.stringify(cart));
       renderCart();
     }
+    function removeItem(i){
+      if(!confirm('Xóa sản phẩm khỏi giỏ?')) return;
+      cart.splice(i,1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+    document.getElementById('checkout').addEventListener('click', ()=>{
+      if(cart.length===0) return alert('Giỏ hàng trống');
+      // Thanh toán demo: chuyển về contact để khách đặt hàng
+      alert('Demo: chuyển đến trang liên hệ để hoàn tất đơn hàng');
+      location.href = 'contact.html';
+    });
 
     renderCart();
   </script>

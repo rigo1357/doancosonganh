@@ -2,148 +2,236 @@
 <html lang="vi">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Simple Laptop Shop</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PPTLaptop - Trang chủ</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <!-- ...existing code... -->
-<header>
-  <div class="brand">
-    <div class="logo">LS</div>
-    <div>
-      <div style="font-weight:700">LaptopStore</div>
-      <div style="font-size:12px;color:var(--muted)">Shop laptop cơ bản</div>
+  <header class="header">
+    <div class="container">
+      <div class="brand">
+        <div class="logo">PL</div>
+        <div>
+          <div style="font-weight:700">PPTLaptop</div>
+          <div style="font-size:12px;color:var(--muted)">Mua laptop - giao tận nơi</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="index.html">Trang chủ</a>
+        <a href="products.html">Sản phẩm</a>
+        <a href="contact.html">Liên hệ</a>
+        <a href="Login.html" id="login-link">Đăng nhập/Đăng ký</a>
+        <span id="user-info" style="margin-left:12px;display:none;color:var(--primary);font-weight:600"></span>
+        <a href="cart.html" style="margin-left:12px">Giỏ (<span id="cart-count">0</span>)</a>
+        <a href="#" id="logout-link" style="margin-left:12px;display:none;color:red;font-weight:600">Đăng xuất</a>
+      </nav>
     </div>
-  </div>
-  <nav>
-    <a href="index.html">Trang chủ</a>
-    <a href="#product-list">Sản phẩm</a>
-    <a href="Login.html" id="login-link">Đăng nhập/Đăngký</a>
-    <a href="#">Liên hệ</a>
-    <span id="user-info" style="margin-left:24px;color:#0056b3;font-weight:500"></span>
-  </nav>
-</header>
-<!-- ...existing code... -->
-<script>
-  // ...existing code...
-
-  // Hiển thị tên tài khoản nếu đã đăng nhập
-  const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
-  if(user && user.email){
-    document.getElementById('user-info').innerText = 'Xin chào, ' + user.email;
-    document.getElementById('login-link').style.display = 'none';
-  }
-
-  // ...existing code...
-</script>
-<!-- ...existing code... -->
   </header>
 
   <main class="container">
     <section class="hero">
       <div class="search">
-         <input id="search" placeholder="Tìm kiếm laptop (ví dụ: gaming, i7, 16GB)..." />
-         <div id="suggestions" style="position:relative;z-index:10"></div>
+        <input id="search" placeholder="Tìm kiếm ..." />
       </div>
-      <div class="cart">
-        <div style="text-align:right">
-          <div style="font-weight:700">Giỏ hàng</div>
-          <div id="cart-count" style="font-size:12px;color:var(--muted)">0 sản phẩm</div>
-        </div>
-        <button class="btn secondary" onclick="window.location.href='cart.html'">Xem</button>
+      <div class="cart-mini">
+        <div style="font-weight:700">Giỏ hàng</div>
+        <div class="small text-muted" id="cart-mini-count">0 sản phẩm</div>
       </div>
     </section>
 
-    <section class="grid" id="product-list">
-      <!-- Product cards inserted by JS -->
+    <section>
+      <h3>Sản phẩm nổi bật</h3>
+      <div class="grid" id="product-list"></div>
     </section>
   </main>
 
-  <footer>
-    <div class="container" style=" text-align:center; font-size:14px; color:#666;">
-      &copy; 2025 LaptopStore. All rights reserved.
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <h4>Liên hệ</h4>
+      <p>📞 0971 476 878</p>
+      <p>📧 pptlaptop@gmail.com</p>
     </div>
-  </footer>
+    <div>
+      <h4>Địa chỉ</h4>
+      <p class="small text-muted">06 Trần Văn Ơn, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam</p>
+      <div style="margin-top:8px">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.996246850356!2d106.6747335!3d10.979613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d1276f4b7577%3A0x54075879a0f2301!2s06%20Tr%E1%BA%A7n%20V%C4%83n%20%C6%A0n%2C%20Ph%C3%BA%20Ho%C3%A0%2C%20Th%E1%BB%A7%20D%E1%BA%A7u%20M%E1%BB%99t%2C%20B%C3%ACnh%20D%C6%B0%C6%A1ng%2C%20Vi%E1%BB%87t%20Nam!5e0!3m2!1svi!2s!4v1727111111111!5m2!1svi!2s"
+          width="250"
+          height="180"
+          style="border:0;border-radius:8px;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phần bản quyền căn giữa -->
+  <div style="text-align:center; color:#888; margin:12px auto 0; font-size:13px; width:100%;">
+    &copy; 2025 PPTLaptop. All rights reserved.
+  </div>
+</footer>
+
+
+
+  <!-- Chatbox -->
+  <style>
+    #chatbox { position: fixed; right: 18px; bottom: 18px; width:320px; max-height:420px; display:flex;flex-direction:column;border-radius:12px;overflow:hidden;box-shadow:0 10px 30px rgba(10,20,60,0.15);z-index:9999; font-family:sans-serif }
+    #chatbox .header { background:#1976d2; color:#fff;padding:10px;font-weight:700; cursor:pointer }
+    #chatbox .body { background:#fff;padding:10px;flex:1;overflow:auto;font-size:14px }
+    #chatbox .input { display:flex;border-top:1px solid #eee;background:#fafafa;padding:8px }
+    #chatbox input { flex:1;padding:8px;border-radius:8px;border:1px solid #e6e9ee;margin-right:8px }
+    #chatbox button { padding:8px 10px;border-radius:8px;border:none;background:#1976d2;color:#fff;cursor:pointer }
+    .msg { margin:6px 0;padding:8px;border-radius:8px;max-width:82% }
+    .msg.user { background:#eef6ff;margin-left:auto }
+    .msg.bot { background:#f1f6ee }
+  </style>
+
+<div id="chatbox">
+  <div class="header" id="chat-toggle">💬 Hỗ trợ — PPTLaptop</div>
+  <div class="body" id="chat-body" style="display:none">
+    <div id="messages"><div class="msg bot">Chào bạn! Shop có thể giúp gì?</div></div>
+  </div>
+  <div class="input" id="chat-input-area" style="display:none">
+    <textarea id="chat-input" placeholder="Gõ câu hỏi..." rows="1"></textarea>
+    <button id="chat-send">Gửi</button>
+  </div>
+</div>
+
+
 
   <script>
-    // Dữ liệu mẫu
+    /* ------------------------
+       Dữ liệu sản phẩm mẫu
+    -------------------------*/
     const products = [
-      {id:1, name:'Laptop Asus', price:15000000, desc:'Intel i5, 8GB RAM, 512GB SSD', img:'Image/Asus.webp'},
-      {id:2, name:'Laptop Dell', price:17000000, desc:'Intel i7, 16GB RAM, 512GB SSD', img:'Image/LaptopDell.webp'},
-      {id:3, name:'Laptop HP', price:16000000, desc:'Intel i5, 8GB RAM, 256GB SSD', img:'Image/HP.jpg'},
-      {id:4, name:'MacBook Air M1', price:24000000, desc:'Apple M1, 8GB RAM, 256GB SSD', img:'Image/MacBook.webp'},
-      {id:5, name:'Lenovo Ideapad', price:12000000, desc:'AMD Ryzen 5, 8GB RAM, 512GB SSD', img:'Image/Lenovo.webp'}
+      {id:1, name:'Asus TUF Gaming A15', brand:'Asus', price:24800000, desc:'Ryzen 7, 16GB RAM, RTX3050, 512GB SSD', img:'Image/Asus.webp'},
+      {id:2, name:'Dell Inspiron 15', brand:'Dell', price:16800000, desc:'Intel i5, 8GB RAM, 256GB SSD', img:'Image/LaptopDell.webp'},
+      {id:3, name:'HP Pavilion 14', brand:'HP', price:14900000, desc:'Intel i3, 8GB RAM, 256GB SSD', img:'Image/HP.jpg'},
+      {id:4, name:'MacBook Air M2', brand:'Apple', price:27900000, desc:'Apple M2, 8GB, 256GB SSD', img:'Image/MacBook.webp'},
+      {id:5, name:'Lenovo IdeaPad 3', brand:'Lenovo', price:11900000, desc:'Ryzen 5, 8GB RAM, 512GB SSD', img:'Image/Lenovo.webp'},
+      {id:6, name:'Asus Vivobook 15', brand:'Asus', price:12900000, desc:'Intel i5, 8GB RAM, 512GB SSD', img:'Image/Asus.webp'}
     ];
 
-    // Giỏ hàng
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    document.getElementById('cart-count').innerText = `${cart.length} sản phẩm`;
+    function updateCartCount(){
+      document.getElementById('cart-count').innerText = cart.length;
+      document.getElementById('cart-mini-count').innerText = cart.length + ' sản phẩm';
+      document.getElementById('cart-mini-count').classList.toggle('text-muted', cart.length===0);
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+    updateCartCount();
 
     function money(v){ return v.toLocaleString('vi-VN') + ' ₫'; }
-
     function renderProducts(list){
       const container = document.getElementById('product-list');
       container.innerHTML = '';
-      list.forEach(p => {
+      list.slice(0,6).forEach(p=>{
         const card = document.createElement('div'); card.className='card';
         card.innerHTML = `
           <img src="${p.img}" alt="${p.name}" />
-          <div class="body">
-            <div class="title">${p.name}</div>
-            <div class="desc">${p.desc}</div>
-            <div class="price-row">
-              <div class="price">${money(p.price)}</div>
-              <div>
-                <button class="btn secondary" onclick="viewDetail(${p.id})">Xem</button>
-                <button class="btn" onclick="addToCart(${p.id})">Thêm vào giỏ</button>
-              </div>
+          <div class="title">${p.name}</div>
+          <div class="desc">${p.desc} — <span class="small text-muted">${p.brand}</span></div>
+          <div class="price-row">
+            <div class="price">${money(p.price)}</div>
+            <div>
+              <button class="btn secondary" onclick="viewDetail(${p.id})">Xem</button>
+              <button class="btn" onclick="addToCart(${p.id})">Thêm</button>
             </div>
           </div>
         `;
         container.appendChild(card);
-      })
+      });
     }
+    renderProducts(products);
 
     function addToCart(id){
       const p = products.find(x=>x.id===id);
-      if(!p) return;
-      cart.push(p);
-      document.getElementById('cart-count').innerText = `${cart.length} sản phẩm`;
-      localStorage.setItem('cart', JSON.stringify(cart));
+      if(!p) return alert('Sản phẩm không tồn tại');
+      cart.push({...p, qty:1});
+      updateCartCount();
       alert('Đã thêm: ' + p.name);
     }
-
     function viewDetail(id){
-      const p = products.find(x=>x.id===id);
-      if(!p) return;
-      alert(p.name + "\n" + p.desc + "\nGiá: " + money(p.price));
+      window.location.href = 'product-detail.html?id=' + id;
     }
 
-    // Tìm kiếm
-    document.getElementById('search').addEventListener('input', (e)=>{
+    document.getElementById('search').addEventListener('input', e=>{
       const q = e.target.value.trim().toLowerCase();
-      const suggestionsDiv = document.getElementById('suggestions');
-      if(!q) {
-        suggestionsDiv.innerHTML = '';
-        return renderProducts(products);
-      }
-      const filtered = products.filter(p => (p.name + ' ' + p.desc).toLowerCase().includes(q));
+      if(!q){ renderProducts(products); return; }
+      const filtered = products.filter(p => (p.name + ' ' + p.desc + ' ' + p.brand).toLowerCase().includes(q));
       renderProducts(filtered);
-
-      // Gợi ý sản phẩm
-      if(filtered.length > 0) {
-        suggestionsDiv.innerHTML = filtered.map(p => 
-          `<div class="suggestion-item" style="background:#fff;border-bottom:1px solid #eee;padding:4px;cursor:pointer" onclick="document.getElementById('search').value='${p.name}';document.getElementById('suggestions').innerHTML='';">${p.name}</div>`
-        ).join('');
-      } else {
-        suggestionsDiv.innerHTML = '<div style="padding:4px;color:#888">Không tìm thấy sản phẩm phù hợp</div>';
-      }
     });
 
-    // Khởi tạo
-    renderProducts(products);
-  </script>
+const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+
+if(user){
+  // Ẩn nút đăng nhập, hiện chào user + đăng xuất
+  document.getElementById('login-link').style.display = 'none';
+  document.getElementById('user-info').style.display = 'inline-block';
+  document.getElementById('user-info').innerText = 'Xin chào, ' + user.email;
+  document.getElementById('logout-link').style.display = 'inline-block';
+}
+
+// Xử lý khi click "Đăng xuất"
+document.getElementById('logout-link').addEventListener('click', e=>{
+  e.preventDefault();
+  localStorage.removeItem('currentUser'); // xoá user
+  window.location.reload(); // reload lại để reset trạng thái
+});
+
+    /* --- Chatbox Script --- */
+const chatToggle = document.getElementById('chat-toggle');
+const chatBody = document.getElementById('chat-body');
+const chatInputArea = document.getElementById('chat-input-area');
+const messages = document.getElementById('messages');
+const chatInput = document.getElementById('chat-input');
+const chatSend = document.getElementById('chat-send');
+
+let chatOpen = false;
+chatToggle.addEventListener('click', ()=>{
+  chatOpen = !chatOpen;
+  chatBody.style.display = chatOpen ? 'block' : 'none';
+  chatInputArea.style.display = chatOpen ? 'flex' : 'none';
+});
+
+function appendMsg(text, cls){
+  const d = document.createElement('div');
+  d.className = 'msg ' + cls;
+  d.innerText = text;
+  messages.appendChild(d);
+  messages.parentElement.scrollTop = messages.parentElement.scrollHeight;
+}
+
+async function sendChatMessage(){
+  const t = chatInput.value.trim();
+  if(!t) return;
+  appendMsg(t,'user');
+  chatInput.value = '';
+  try{
+    const res = await fetch('http://127.0.0.1:5000/api/ollama', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ prompt: t })
+    });
+    const data = await res.json();
+    appendMsg(data.reply || 'Xin lỗi, chưa có phản hồi.','bot');
+  }catch(err){
+    console.error('Chatbox error:', err);
+    appendMsg('⚠️ Không thể kết nối máy chủ.','bot');
+  }
+}
+
+chatSend.addEventListener('click', sendChatMessage);
+chatInput.addEventListener('keydown', e=>{
+  if(e.key==='Enter') sendChatMessage();
+});
+
+
+</script>
 </body>
 </html>

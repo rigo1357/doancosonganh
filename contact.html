@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="vi">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Liên hệ - PPTLaptop</title><link rel="stylesheet" href="style.css"></head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="brand">
+        <div class="logo">PL</div>
+        <div>
+          <div style="font-weight:700">PPTLaptop</div>
+          <div style="font-size:12px;color:var(--muted)">Mua laptop - giao tận nơi</div>
+        </div>
+      </div>
+      <nav><a href="index.html">Trang chủ</a><a href="products.html">Sản phẩm</a><a href="cart.html">Giỏ hàng</a></nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h3>Liên hệ / Đặt hàng</h3>
+
+    <div style="display:grid;grid-template-columns:1fr 360px;gap:18px">
+      <form id="contact-form" class="contact-form">
+        <label>Họ tên</label>
+        <input id="c-name" required />
+        <label>Email</label>
+        <input id="c-email" type="email" required />
+        <label>Nội dung</label>
+        <textarea id="c-msg" rows="6" required style="padding:8px;border-radius:8px;border:1px solid #eee"></textarea>
+        <div style="margin-top:8px">
+          <button class="btn" type="submit">Gửi liên hệ</button>
+        </div>
+      </form>
+
+      <div style="background:var(--card);padding:14px;border-radius:12px;box-shadow:var(--shadow)">
+        <h4>Thông tin cửa hàng</h4>
+        <p class="small text-muted">📞 0971 476 878</p>
+        <p class="small text-muted">📧 pptlaptop@example.com</p>
+        <p class="small text-muted">🏠 06 Trần Văn Ơn, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam</p>
+        <div style="margin-top:8px">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.996246850356!2d106.6747335!3d10.979613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d1276f4b7577%3A0x54075879a0f2301!2s06%20Tr%E1%BA%A7n%20V%C4%83n%20%C6%A0n%2C%20Ph%C3%BA%20Ho%C3%A0%2C%20Th%E1%BB%A7%20D%E1%BA%A7u%20M%E1%BB%99t%2C%20B%C3%ACnh%20D%C6%B0%C6%A1ng%2C%20Vi%E1%BB%87t%20Nam!5e0!3m2!1svi!2s!4v1727111111111!5m2!1svi!2s" width="100%" height="160" style="border:0"></iframe>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('contact-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('c-name').value.trim();
+      const email = document.getElementById('c-email').value.trim();
+      const msg = document.getElementById('c-msg').value.trim();
+      if(!name||!email||!msg) return alert('Nhập đầy đủ thông tin');
+      // demo: lưu vào localStorage (hoặc gửi backend sau này)
+      let contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
+      contacts.push({name,email,msg, time: new Date().toISOString()});
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+      alert('Cám ơn ' + name + '! Chúng tôi đã nhận được tin nhắn.');
+      this.reset();
+    });
+  </script>
+</body>
+</html>
