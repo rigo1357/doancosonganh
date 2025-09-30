@@ -1,53 +1,133 @@
 <!doctype html>
 <html lang="vi">
-<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Đăng nhập - PPTLaptop</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="auth.css"></head>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Đăng nhập - PPTLaptop</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="auth.css">
+</head>
 <body>
   <header class="header">
-    <div class="container">
-      <div class="brand"><div class="logo">PL</div></div>
-      <nav><a href="index.html">Trang chủ</a><a href="products.html">Sản phẩm</a><a href="cart.html">Giỏ hàng</a></nav>
+    <div class="container header-inner">
+      <div class="brand">
+       <div class="logo" style="padding:0;overflow:hidden;display:flex;align-items:center;justify-content:center">
+          <a href="index.html" style="display:block;width:100%;height:100%">
+            <img src="Image/Logo.jpg" alt="Logo PPTLaptop" style="width:100%;height:100%;object-fit:contain;" />
+          </a>
+        </div>
+        <div>
+          <div class="brand-title">PPTStore</div>
+          <div class="brand-sub">Mua laptop - giao tận nơi</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="index.html">Trang chủ</a>
+        <a href="products.html">Sản phẩm</a>
+        <a href="contact.html">Liên hệ</a>
+        <a href="Login.html" class="active" id="login-link">Đăng nhập/Đăng ký</a>
+        <span id="user-info" class="user-info"></span>
+        <a href="#" id="logout-link" class="logout" style="display:none">Đăng xuất</a>
+      </nav>
     </div>
   </header>
 
   <main class="container">
     <div class="auth-container">
-      <div class="auth-tabs">
-        <div class="auth-tab active" id="tab-login" onclick="showTab('login')">Đăng nhập</div>
-        <div class="auth-tab" id="tab-register" onclick="showTab('register')">Đăng ký</div>
+      <div class="auth-card">
+        <div class="auth-tabs">
+          <div class="auth-tab active" id="tab-login" onclick="showTab('login')">Đăng nhập</div>
+          <div class="auth-tab" id="tab-register" onclick="showTab('register')">Đăng ký</div>
+        </div>
+
+        <div id="auth-msg"></div>
+
+        <!-- Login -->
+        <form id="login-form" class="auth-form">
+          <label for="login-email">Email</label>
+          <input id="login-email" type="email" placeholder="email@gmail.com" required />
+          <label for="login-password">Mật khẩu</label>
+          <input id="login-password" type="password" placeholder="Mật khẩu" required />
+          <button type="submit" class="btn">Đăng nhập</button>
+        </form>
+
+        <!-- Register -->
+        <form id="register-form" class="auth-form" style="display:none">
+          <label for="reg-email">Email</label>
+          <input id="reg-email" type="email" placeholder="email@gmail.com" required />
+          <label for="reg-password">Mật khẩu</label>
+          <input id="reg-password" type="password" placeholder="Mật khẩu (>=6 ký tự)" required />
+          <button type="submit" class="btn secondary">Đăng ký</button>
+        </form>
+
+        <!-- OTP -->
+        <form id="otp-form" class="auth-form" style="display:none">
+          <label for="otp-input">Nhập mã OTP (demo)</label>
+          <input id="otp-input" placeholder="Mã 6 chữ số" required />
+          <button type="submit" class="btn">Xác thực</button>
+        </form>
       </div>
-
-      <div id="auth-msg"></div>
-
-      <form id="login-form" class="auth-form">
-        <label for="login-email">Email</label>
-        <input id="login-email" type="email" placeholder="email@gmail.com" required />
-        <label for="login-password">Mật khẩu</label>
-        <input id="login-password" type="password" placeholder="Mật khẩu" required />
-        <button type="submit" class="btn">Đăng nhập</button>
-      </form>
-
-      <form id="register-form" class="auth-form" style="display:none">
-        <label for="reg-email">Email</label>
-        <input id="reg-email" type="email" placeholder="email@gmail.com" required />
-        <label for="reg-password">Mật khẩu</label>
-        <input id="reg-password" type="password" placeholder="Mật khẩu (>=6 ký tự)" required />
-        <button type="submit" class="btn secondary">Đăng ký</button>
-      </form>
-
-      <form id="otp-form" class="auth-form" style="display:none">
-        <label for="otp-input">Nhập mã OTP (demo)</label>
-        <input id="otp-input" placeholder="Mã 6 chữ số" required />
-        <button type="submit" class="btn">Xác thực</button>
-      </form>
     </div>
   </main>
 
-  <script>
-    // simple user store
-    let users = JSON.parse(localStorage.getItem('users') || '[]');
-    // ensure at least one user demo
-    if(!users.find(u=>u.email==='admin@gmail.com')){ users.push({email:'admin@gmail.com', password:'123456'}); localStorage.setItem('users', JSON.stringify(users)); }
+   <footer>
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h6>PPTLaptop</h6>
+            <p>Địa chỉ: 06 Trần Văn Ơn, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam</p>
+            <p>Hotline: 0971 476 878</p>
+            <p>Email: pptlaptop@gmail.com</p>
+            <div style="margin-top:8px">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.996246850356!2d106.6747335!3d10.979613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d1276f4b7577%3A0x54075879a0f2301!2s06%20Tr%E1%BA%A7n%20V%C4%83n%20%C6%A0n%2C%20Ph%C3%BA%20Ho%C3%A0%2C%20Th%E1%BB%A7%20D%E1%BA%A7u%20M%E1%BB%99t%2C%20B%C3%ACnh%20D%C6%B0%C6%A1ng%2C%20Vi%E1%BB%87t%20Nam!5e0!3m2!1svi!2s!4v1727111111111!5m2!1svi!2s"
+                width="250"
+                height="180"
+                style="border:0;border-radius:8px;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h6>THÔNG TIN CÔNG TY</h6>
+            <ul>
+              <li><a href="#">Giới thiệu công ty</a></li>
+              <li><a href="#">Tuyển dụng</a></li>
+              <li><a href="tel:0971476878">Gửi góp ý, khiếu nại</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h6>CHÍNH SÁCH CÔNG TY</h6>
+            <ul>
+              <li><a href="#">Chính sách chất lượng</a></li>
+              <li><a href="#">Chính sách bảo hành</a></li>
+              <li><a href="#">Chính sách đổi trả</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2025 PPTLaptop. All Rights Reserved</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // --- User store ---
+    let users = JSON.parse(localStorage.getItem('users') || '[]');
+    if(!users.find(u=>u.email==='admin@gmail.com')){
+      users.push({email:'admin@gmail.com', password:'123456'});
+      localStorage.setItem('users', JSON.stringify(users));
+    }
+
+    // --- Tabs ---
     function showTab(t){
       document.getElementById('tab-login').classList.toggle('active', t==='login');
       document.getElementById('tab-register').classList.toggle('active', t==='register');
@@ -59,6 +139,7 @@
 
     let pendingUser = null; let otpCode = null;
 
+    // --- Register ---
     document.getElementById('register-form').onsubmit = function(e){
       e.preventDefault();
       const email = document.getElementById('reg-email').value.trim();
@@ -74,6 +155,7 @@
       document.getElementById('otp-form').style.display='block';
     };
 
+    // --- OTP ---
     document.getElementById('otp-form').onsubmit = function(e){
       e.preventDefault();
       const v = document.getElementById('otp-input').value.trim();
@@ -86,6 +168,7 @@
       pendingUser = null; otpCode = null;
     };
 
+    // --- Login ---
     document.getElementById('login-form').onsubmit = function(e){
       e.preventDefault();
       const email = document.getElementById('login-email').value.trim();
@@ -98,6 +181,33 @@
       setTimeout(()=> location.href = 'index.html', 800);
     };
 
+    // --- Hiển thị trạng thái user ---
+    function updateHeader(){
+      const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+      const loginLink = document.getElementById('login-link');
+      const logoutLink = document.getElementById('logout-link');
+      const userInfo = document.getElementById('user-info');
+      if(currentUser){
+        loginLink.style.display = 'none';
+        logoutLink.style.display = 'inline-block';
+        userInfo.innerText = "👤 " + currentUser.email;
+      } else {
+        loginLink.style.display = 'inline-block';
+        logoutLink.style.display = 'none';
+        userInfo.innerText = "";
+      }
+    }
+
+    document.getElementById('logout-link').onclick = function(e){
+      e.preventDefault();
+      localStorage.removeItem('currentUser');
+      updateHeader();
+      location.href = 'index.html';
+    };
+
+    updateHeader();
+
+    // --- Message ---
     function showMsg(msg, success=false){
       document.getElementById('auth-msg').innerHTML = `<div class="${success ? 'auth-success' : 'auth-msg'}">${msg}</div>`;
     }

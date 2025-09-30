@@ -2,19 +2,82 @@
 <html lang="vi">
 <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Giỏ hàng - PPTLaptop</title><link rel="stylesheet" href="style.css"></head>
 <body>
-  <header class="header">
-<div class="container">
+    <header class="header">
+    <div class="container header-inner">
       <div class="brand">
-        <div class="logo">PL</div>
+        <div class="logo" style="padding:0;overflow:hidden;display:flex;align-items:center;justify-content:center">
+          <a href="index.html" style="display:block;width:100%;height:100%">
+            <img src="Image/Logo.jpg" alt="Logo PPTLaptop" style="width:100%;height:100%;object-fit:contain;" />
+          </a>
+        </div>
         <div>
-          <div style="font-weight:700">PPTLaptop</div>
-          <div style="font-size:12px;color:var(--muted)">Mua laptop - giao tận nơi</div>
+          <div class="brand-title">PPTStore</div>
+          <div class="brand-sub">Mua laptop - giao tận nơi</div>
         </div>
       </div>
-      <nav>
+
+      <nav class="nav">
         <a href="index.html">Trang chủ</a>
-        <a href="products.html">Sản phẩm</a>
+        <div class="dropdown">
+          <a href="products.html" class="dropdown-toggle">Sản phẩm</a>
+          <div class="dropdown-menu mega-menu">
+            <div class="mega-col">
+              <div class="mega-title">Laptop Dell</div>
+              <a href="#">Dell Alienware</a>
+              <a href="#">Dell Precision</a>
+              <a href="#">Dell XPS</a>
+              <a href="#">Dell Vostro</a>
+              <a href="#">Dell Inspiron</a>
+              <a href="#">Dell Latitude</a>
+              <a href="#">Dell G-Seri</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-title">Laptop Acer</div>
+              <a href="#">Acer Aspire</a>
+              <a href="#">Acer Nitro</a>
+              <a href="#">Acer Spin</a>
+              <a href="#">Acer Predator</a>
+              <a href="#">Acer Swift</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-title">Laptop Asus</div>
+              <a href="#">Asus Tuf</a>
+              <a href="#">Asus ZenBook</a>
+              <a href="#">Asus VivoBook</a>
+              <a href="#">Asus Rog</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-title">Laptop Lenovo</div>
+              <a href="#">Lenovo Ideapad</a>
+              <a href="#">Lenovo ThinkBook</a>
+              <a href="#">Lenovo Yoga</a>
+              <a href="#">Lenovo Legion</a>
+              <a href="#">Lenovo Thinkpad</a>
+              <a href="#">Lenovo LOQ</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-title">Laptop HP</div>
+              <a href="#">HP Elitebook</a>
+              <a href="#">HP Spectre</a>
+              <a href="#">HP Pavilion</a>
+              <a href="#">HP Probook</a>
+              <a href="#">HP Omen</a>
+              <a href="#">HP Envy</a>
+              <a href="#">HP Zbook</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-title">Laptop MSI</div>
+              <a href="#">MSI G-Seri</a>
+              <a href="#">MSI Bravo</a>
+              <a href="#">MSI Modern</a>
+            </div>
+          </div>
+        </div>
         <a href="contact.html">Liên hệ</a>
+        <a href="Login.html" id="login-link">Đăng nhập/Đăng ký</a>
+        <span id="user-info" class="user-info"></span>
+        <a href="cart.html" class="active" >🛒 Giỏ (<span id="cart-count">0</span>)</a>
+        <a href="#" id="logout-link" class="logout">Đăng xuất</a>
       </nav>
     </div>
   </header>
@@ -28,35 +91,55 @@
     </div>
   </main>
 
-  <footer>
-  <div class="container footer-grid">
-    <div>
-      <h4>Liên hệ</h4>
-      <p>📞 0971 476 878</p>
-      <p>📧 pptlaptop@gmail.com</p>
-    </div>
-    <div>
-      <h4>Địa chỉ</h4>
-      <p class="small text-muted">06 Trần Văn Ơn, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam</p>
-      <div style="margin-top:8px">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.996246850356!2d106.6747335!3d10.979613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d1276f4b7577%3A0x54075879a0f2301!2s06%20Tr%E1%BA%A7n%20V%C4%83n%20%C6%A0n%2C%20Ph%C3%BA%20Ho%C3%A0%2C%20Th%E1%BB%A7%20D%E1%BA%A7u%20M%E1%BB%99t%2C%20B%C3%ACnh%20D%C6%B0%C6%A1ng%2C%20Vi%E1%BB%87t%20Nam!5e0!3m2!1svi!2s!4v1727111111111!5m2!1svi!2s"
-          width="250"
-          height="180"
-          style="border:0;border-radius:8px;"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
+
+   <footer>
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h6>PPTLaptop</h6>
+            <p>Địa chỉ: 06 Trần Văn Ơn, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam</p>
+            <p>Hotline: 0971 476 878</p>
+            <p>Email: pptlaptop@gmail.com</p>
+            <div style="margin-top:8px">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.996246850356!2d106.6747335!3d10.979613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d1276f4b7577%3A0x54075879a0f2301!2s06%20Tr%E1%BA%A7n%20V%C4%83n%20%C6%A0n%2C%20Ph%C3%BA%20Ho%C3%A0%2C%20Th%E1%BB%A7%20D%E1%BA%A7u%20M%E1%BB%99t%2C%20B%C3%ACnh%20D%C6%B0%C6%A1ng%2C%20Vi%E1%BB%87t%20Nam!5e0!3m2!1svi!2s!4v1727111111111!5m2!1svi!2s"
+                width="250"
+                height="180"
+                style="border:0;border-radius:8px;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h6>THÔNG TIN CÔNG TY</h6>
+            <ul>
+              <li><a href="#">Giới thiệu công ty</a></li>
+              <li><a href="#">Tuyển dụng</a></li>
+              <li><a href="tel:0971476878">Gửi góp ý, khiếu nại</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h6>CHÍNH SÁCH CÔNG TY</h6>
+            <ul>
+              <li><a href="#">Chính sách chất lượng</a></li>
+              <li><a href="#">Chính sách bảo hành</a></li>
+              <li><a href="#">Chính sách đổi trả</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Phần bản quyền căn giữa -->
-  <div style="text-align:center; color:#888; margin:12px auto 0; font-size:13px; width:100%;">
-    &copy; 2025 PPTLaptop. All rights reserved.
-  </div>
-</footer>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2025 PPTLaptop. All Rights Reserved</p>
+      </div>
+    </div>
+  </footer>
+  
   <script>
     function money(v){ return v.toLocaleString('vi-VN') + ' ₫'; }
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -74,21 +157,23 @@
         total += (c.price * (c.qty || 1));
         const row = document.createElement('div'); row.className='cart-row';
         row.innerHTML = `
-          <div style="display:flex;gap:12px;align-items:center">
-            <img src="${c.img}" style="width:78px;height:58px;object-fit:contain;border-radius:8px" />
-            <div>
-              <div style="font-weight:600">${c.name}</div>
-              <div class="small text-muted">${c.desc}</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:18px;width:100%">
+            <div style="display:flex;gap:12px;align-items:center">
+              <img src="${c.img}" style="width:78px;height:58px;object-fit:contain;border-radius:8px" />
+              <div>
+                <div style="font-weight:600">${c.name}</div>
+                  <div class="small text-muted">${c.desc}</div>
+              </div>
             </div>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px">
-            <div class="qty">
-              <button onclick="changeQty(${idx}, -1)" style="padding:6px;border-radius:6px;border:1px solid #eee;background:#fff">-</button>
-              <div style="min-width:28px;text-align:center">${c.qty || 1}</div>
-              <button onclick="changeQty(${idx}, 1)" style="padding:6px;border-radius:6px;border:1px solid #eee;background:#fff">+</button>
+            <div style="display:flex;align-items:center;gap:16px;min-width:260px;justify-content:flex-end">
+              <div style="min-width:110px;text-align:right">${money((c.qty||1)*c.price)}</div>
+              <div class="qty" style="display:flex;align-items:center;gap:4px;">
+                <button onclick="changeQty(${idx}, -1)" style="padding:6px 10px;border-radius:6px;border:1px solid #eee;background:#fff">-</button>
+                <div style="min-width:28px;text-align:center">${c.qty || 1}</div>
+                <button onclick="changeQty(${idx}, 1)" style="padding:6px 10px;border-radius:6px;border:1px solid #eee;background:#fff">+</button>
+              </div>
+              <div><button onclick="removeItem(${idx})" style="background:#fff;border:1px solid #f1c0c0;padding:6px 10px;border-radius:8px;color:#b00000">Xóa</button></div>
             </div>
-            <div style="min-width:110px;text-align:right">${money((c.qty||1)*c.price)}</div>
-            <div><button onclick="removeItem(${idx})" style="background:#fff;border:1px solid #f1c0c0;padding:6px;border-radius:8px;color:#b00000">Xóa</button></div>
           </div>
         `;
         list.appendChild(row);

@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PPTLaptop - Laptop Học tập & Văn phòng</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .pagination {
+      margin: 20px 0;
+      text-align: center;
+    }
+    .pagination button {
+      margin: 0 5px;
+      padding: 6px 12px;
+      border: 1px solid #1976d2;
+      background: #fff;
+      color: #1976d2;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .pagination button.active {
+      background: #1976d2;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="logo" style="padding:0;overflow:hidden;display:flex;align-items:center;justify-content:center">
+          <a href="index.html" style="display:block;width:100%;height:100%">
+            <img src="/Image/Logo.jpg" alt="Logo PPTLaptop" style="width:100%;height:100%;object-fit:contain;" />
+          </a>
+        </div>
+        <div>
+          <div class="brand-title">PPTStore</div>
+          <div class="brand-sub">Mua laptop - giao tận nơi</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="/index.html">Trang chủ</a>
+        <a href="/products.html" class="active">Sản phẩm</a>
+        <a href="/contact.html">Liên hệ</a>
+        <a href="/Login.html" id="login-link">Đăng nhập/Đăng ký</a>
+        <span id="user-info" class="user-info"></span>
+        <a href="/cart.html">🛒 Giỏ (<span id="cart-count">0</span>)</a>
+        <a href="#" id="logout-link" class="logout">Đăng xuất</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="margin-top:24px">
+      <h2 class="section-title">Laptop Học Tập - Văn Phòng</h2>
+  <p class="text-muted">Chọn lọc các mẫu laptop mới nhất, giá tốt tại PPTLaptop</p>
+
+    <div class="controls" style="flex-wrap:wrap;gap:12px;align-items:center;display:flex;">
+      <select id="filter-brand" class="select">
+        <option value="">Tất cả hãng</option>
+      </select>
+
+      <select id="sort" class="select">
+        <option value="default">Sắp xếp</option>
+        <option value="price-asc">Giá: Thấp → Cao</option>
+        <option value="price-desc">Giá: Cao → Thấp</option>
+      </select>
+
+      <div style="display:flex;align-items:center;gap:8px;min-width:220px;">
+        <label for="price-range" style="font-size:14px;color:#555">Giá:</label>
+        <span id="price-min-label">0</span>
+        <input type="range" id="price-range" min="0" max="100000000" step="500000" value="0" style="flex:1" />
+        <span id="price-max-label">100tr+</span>
+      </div>
+
+      <input id="q" class="input" placeholder="Tìm kiếm..." style="flex:1" />
+      <button class="btn" id="apply-filter">Áp dụng</button>
+    </div>
+    <div class="grid" id="study-list"></div>
+
+    <!-- Phân trang -->
+    <div class="pagination" id="pagination"></div>
+  </main>
+
+   <footer>
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h6>PPTLaptop</h6>
+            <p>Địa chỉ: 06 Trần Văn Ơn, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam</p>
+            <p>Hotline: 0971 476 878</p>
+            <p>Email: pptlaptop@gmail.com</p>
+            <div style="margin-top:8px">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.996246850356!2d106.6747335!3d10.979613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d1276f4b7577%3A0x54075879a0f2301!2s06%20Tr%E1%BA%A7n%20V%C4%83n%20%C6%A0n%2C%20Ph%C3%BA%20Ho%C3%A0%2C%20Th%E1%BB%A7%20D%E1%BA%A7u%20M%E1%BB%99t%2C%20B%C3%ACnh%20D%C6%B0%C6%A1ng%2C%20Vi%E1%BB%87t%20Nam!5e0!3m2!1svi!2s!4v1727111111111!5m2!1svi!2s"
+                width="250"
+                height="180"
+                style="border:0;border-radius:8px;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h6>THÔNG TIN CÔNG TY</h6>
+            <ul>
+              <li><a href="#">Giới thiệu công ty</a></li>
+              <li><a href="#">Tuyển dụng</a></li>
+              <li><a href="tel:0971476878">Gửi góp ý, khiếu nại</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h6>CHÍNH SÁCH CÔNG TY</h6>
+            <ul>
+              <li><a href="#">Chính sách chất lượng</a></li>
+              <li><a href="#">Chính sách bảo hành</a></li>
+              <li><a href="#">Chính sách đổi trả</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2025 PPTLaptop. All Rights Reserved</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+// Cập nhật số lượng sản phẩm trong giỏ
+function updateCartCount(){
+  let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  let count = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+  document.getElementById('cart-count').innerText = count;
+}
+
+updateCartCount();
+window.addEventListener('storage', updateCartCount);
+    import { products } from '/products.js';
+
+    const studyProducts = products.filter(p => p.category === 'study');
+    const perPage = 20;
+    let currentPage = 1;
+
+    function money(v){ return v.toLocaleString('vi-VN') + ' ₫'; }
+
+    function renderPage(page){
+      const list = document.getElementById('study-list');
+      list.innerHTML = '';
+
+      const start = (page-1)*perPage;
+      const end = start + perPage;
+      const items = studyProducts.slice(start, end);
+
+      items.forEach(p=>{
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="../${p.img}" alt="${p.name}" />
+          <div class="title">${p.name}</div>
+          <div class="desc">${p.desc} — <span class="small text-muted">${p.brand}</span></div>
+          <div class="price">${money(p.price)}</div>
+          <div class="price-row">
+            <button class="btn secondary" onclick="viewDetail(${p.id})">Xem</button>
+            <button class="btn" onclick="addToCart(${p.id})">Thêm</button>
+          </div>
+        `;
+        list.appendChild(card);
+      });
+
+      renderPagination();
+    }
+
+    function renderPagination(){
+      const totalPages = Math.ceil(studyProducts.length / perPage);
+      const pagination = document.getElementById('pagination');
+      pagination.innerHTML = '';
+
+      for(let i=1; i<=totalPages; i++){
+        const btn = document.createElement('button');
+        btn.innerText = i;
+        if(i === currentPage) btn.classList.add('active');
+        btn.addEventListener('click', ()=>{ currentPage = i; renderPage(i); });
+        pagination.appendChild(btn);
+      }
+    }
+
+    window.addToCart = function(id){
+      const p = products.find(x=>x.id===id);
+      if(!p) return alert('Sản phẩm không tồn tại');
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      cart.push({...p, qty:1});
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert('Đã thêm: ' + p.name);
+    }
+
+    window.viewDetail = function(id){
+      window.location.href = '/product-detail.html?id=' + id;
+    }
+
+    renderPage(currentPage);
+  </script>
+</body>
+</html>

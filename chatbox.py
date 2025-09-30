@@ -1,10 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session
 from flask_cors import CORS
 from openai import OpenAI
 import traceback
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
+app.secret_key = "pptlaptop-secret"  # cần cho session
 
 client = OpenAI(
     base_url="http://localhost:11434/v1",
@@ -12,24 +13,25 @@ client = OpenAI(
 )
 
 SYSTEM_PROMPT = """
-Bạn là nhân viên tư vấn bán laptop thân thiện của cửa hàng PPTLaptop. 
-Hãy trò chuyện tự nhiên, ngắn gọn và tạo cảm giác dễ chịu cho khách hàng.
-
-Nguyên tắc tư vấn:
-1. Luôn chào hỏi vui vẻ, giữ thái độ thân thiện.
-2. Hỏi rõ nhu cầu sử dụng: học tập, văn phòng, gaming, đồ họa, lập trình...
-3. Gợi ý 1–2 mẫu laptop phù hợp (hãng, CPU, RAM, SSD, GPU, giá).
-4. Giải thích ngắn gọn lý do vì sao laptop đó phù hợp.
-5. Luôn sẵn sàng trả lời thêm khi khách đặt câu hỏi tiếp theo.
-6. Nếu khách hỏi những điều không liên quan đến laptop, hãy lịch sự trả lời rằng bạn chỉ hỗ trợ về tư vấn laptop tại PPTLaptop và khéo léo gợi ý họ quay lại chủ đề mua laptop.
-
-Ví dụ phong cách hội thoại:
-- "Anh/chị định dùng laptop cho học tập, làm việc hay chơi game nhiều hơn ạ?"
-- "Nếu chơi game thì em gợi ý Asus TUF hoặc Dell G-Series, cấu hình mạnh mà bền, giá tầm trung hợp lý."
-- "Nếu chỉ học tập, văn phòng thì Lenovo IdeaPad hoặc HP Pavilion sẽ gọn nhẹ, pin lâu và giá mềm hơn."
-- "Xin lỗi anh/chị, em chỉ hỗ trợ tư vấn về laptop. Anh/chị muốn tìm laptop cho nhu cầu nào thì em gợi ý ngay ạ."
+Bạn là chuyên viên tư vấn laptop của cửa hàng PPTLaptop, luôn thân thiện, chuyên nghiệp và hiểu rõ các dòng máy trên thị trường.
+Nhiệm vụ của bạn:
+1. Luôn bắt đầu bằng việc hỏi rõ nhu cầu sử dụng của khách (học tập, văn phòng, gaming, đồ họa, lập trình, di chuyển nhiều, v.v.).
+2. Sau khi biết nhu cầu, hãy gợi ý 1–2 mẫu laptop phù hợp nhất, nêu rõ hãng, cấu hình (CPU, RAM, SSD, GPU), giá bán, và lý do chọn mẫu đó.
+3. Giải thích ngắn gọn, dễ hiểu, tập trung vào lợi ích thực tế cho khách hàng (ví dụ: "Mẫu này phù hợp vì pin lâu, màn hình đẹp, giá hợp lý cho sinh viên").
+4. Nếu khách hỏi về khuyến mãi, trả góp, bảo hành, hãy trả lời chi tiết và chủ động đề xuất các ưu đãi của cửa hàng.
+5. Luôn giữ thái độ lịch sự, không lặp lại chào hỏi, không trả lời lan man ngoài chủ đề laptop.
+6. Nếu khách hỏi ngoài chủ đề laptop, hãy khéo léo chuyển hướng về tư vấn laptop.
+7. Luôn sẵn sàng trả lời tiếp các câu hỏi bổ sung, không kết thúc hội thoại quá sớm.
+8. Trả lời ngắn gọn, tự nhiên, giống như một nhân viên tư vấn thực thụ, không máy móc
 """
 
+# Bộ nhớ hội thoại (demo dùng session Flask, có thể thay DB/Redis)
+def get_history():
+    if "history" not in session:
+        session["history"] = [
+            {"role": "system", "content": SYSTEM_PROMPT}
+        ]
+    return session["history"]
 
 @app.route("/api/ollama", methods=["POST"])
 def chat():
@@ -39,27 +41,45 @@ def chat():
         if not user_msg:
             return jsonify({"reply": "Bạn muốn tìm laptop cho mục đích gì ạ?"}), 200
 
+        # Lấy lịch sử
+        history = get_history()
+        history.append({"role": "user", "content": user_msg})
+
+        # Gọi API
         response = client.chat.completions.create(
             model="gemma2:9b",
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": user_msg}
-            ]
+            messages=history
         )
 
-        # Chuẩn hóa lấy reply
         reply = None
         try:
-            reply = response.choices[0].message.content
-        except:
-            reply = getattr(response.choices[0], "text", str(response))
+            if hasattr(response.choices[0], "message"):
+                reply = response.choices[0].message.content
+            elif hasattr(response.choices[0], "text"):
+                reply = response.choices[0].text
+        except Exception as e:
+            print("Parse error:", e)
 
-        return jsonify({"reply": reply}), 200
+        if not reply:
+            reply = "Xin lỗi, em chưa nghe rõ nhu cầu. Anh/chị muốn tìm laptop cho mục đích gì ạ?"
+
+        # Lưu lại lịch sử
+        history.append({"role": "assistant", "content": reply})
+        session["history"] = history
+
+        return jsonify({"reply": reply.strip()}), 200
 
     except Exception as e:
         print("!!! Error:", e)
         traceback.print_exc()
-        return jsonify({"reply": "Xin lỗi, hệ thống gặp sự cố."}), 500
+        return jsonify({"reply": "⚠️ Xin lỗi, hệ thống gặp sự cố."}), 500
+
+
+@app.route("/api/ollama/reset", methods=["POST"])
+def reset_chat():
+    session.pop("history", None)
+    return jsonify({"reply": "Đã khởi động lại hội thoại. Xin chào, bạn muốn tìm laptop cho nhu cầu nào ạ?"}), 200
+
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=False)

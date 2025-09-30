@@ -1,0 +1,621 @@
+-- Tạo Database
+CREATE DATABASE LenovoLegionDB;
+USE LenovoLegionDB;
+
+-- Bảng Laptop
+CREATE TABLE Laptop (
+    LaptopID INT PRIMARY KEY AUTO_INCREMENT,
+    Model VARCHAR(100),
+    Year INT,
+    Series VARCHAR(50),
+    Price DECIMAL(12,2) NULL
+);
+
+-- Thông số cơ bản (ngắn gọn)
+CREATE TABLE Specifications (
+    SpecID INT PRIMARY KEY AUTO_INCREMENT,
+    LaptopID INT,
+    CPU VARCHAR(100),
+    RAM VARCHAR(50),
+    Storage VARCHAR(50),
+    GPU VARCHAR(100),
+    Display VARCHAR(100),
+    FOREIGN KEY (LaptopID) REFERENCES Laptop(LaptopID)
+);
+
+-- Đặc điểm nổi bật
+CREATE TABLE Features (
+    FeatureID INT PRIMARY KEY AUTO_INCREMENT,
+    LaptopID INT,
+    FeatureText VARCHAR(255),
+    FOREIGN KEY (LaptopID) REFERENCES Laptop(LaptopID)
+);
+
+-- Tuỳ chọn nâng cấp
+CREATE TABLE Upgrades (
+    UpgradeID INT PRIMARY KEY AUTO_INCREMENT,
+    LaptopID INT,
+    UpgradeType VARCHAR(50),
+    OptionText VARCHAR(100),
+    FOREIGN KEY (LaptopID) REFERENCES Laptop(LaptopID)
+);
+
+-- Quà tặng kèm
+CREATE TABLE BundledItems (
+    BundleID INT PRIMARY KEY AUTO_INCREMENT,
+    LaptopID INT,
+    ItemName VARCHAR(100),
+    FOREIGN KEY (LaptopID) REFERENCES Laptop(LaptopID)
+);
+
+-- Thông số kỹ thuật chi tiết (dạng bảng trong hình)
+CREATE TABLE TechnicalSpecs (
+    SpecID INT PRIMARY KEY AUTO_INCREMENT,
+    LaptopID INT,
+    CPU TEXT,
+    RAM VARCHAR(100),
+    Storage VARCHAR(100),
+    GPU VARCHAR(100),
+    MUXSwitch VARCHAR(10),
+    Display TEXT,
+    Webcam VARCHAR(100),
+    Ports TEXT,
+    Weight VARCHAR(50),
+    Battery VARCHAR(100),
+    OS VARCHAR(100),
+    FOREIGN KEY (LaptopID) REFERENCES Laptop(LaptopID)
+);
+
+-- ==========================
+-- DỮ LIỆU
+-- ==========================
+
+-- Laptop
+INSERT INTO Laptop (Model, Year, Series) VALUES
+('Lenovo Legion Y7000P 2025', 2025, 'Y7000P'),
+('Lenovo Legion Y9000P 2024', 2024, 'Y9000P'),
+('Lenovo Legion Y9000P 2025', 2025, 'Y9000P'),
+('Lenovo Legion R7000P 2025', 2025, 'R7000P'),
+('Lenovo Legion Y7000 2024', 2024, 'Y7000');
+
+-- Specifications (ngắn gọn)
+INSERT INTO Specifications (LaptopID, CPU, RAM, Storage, GPU, Display) VALUES
+(1, 'Core i9-14900HX', '16GB', '1TB SSD', 'RTX 5060 8GB', '16\'\' 2K+ 240Hz'),
+(2, 'Core i9-14900HX', '32GB', '1TB SSD', 'RTX 4060 8GB', '16\'\' 2K+ 240Hz'),
+(3, 'Ultra 9 275HX', '32GB', '1TB SSD', 'RTX 5060 8GB', '16\'\' 2K+ OLED 240Hz'),
+(4, 'Ryzen 9-8945HX', '16GB', '1TB SSD', 'RTX 5060 8GB', '16\'\' 2K+ 240Hz'),
+(5, 'Core i7-13650HX', '24GB', '512GB SSD', 'RTX 4060 8GB', '15.6\'\' FHD 144Hz');
+
+-- Features
+INSERT INTO Features (LaptopID, FeatureText) VALUES
+(1, 'Hiệu năng cao cho gaming và đồ họa'),
+(2, 'RAM 32GB, thích hợp render và đa nhiệm'),
+(3, 'Màn hình OLED 2K+ sắc nét, màu chuẩn'),
+(4, 'CPU Ryzen 9 mới nhất, tối ưu cho gaming AAA'),
+(5, 'Giá rẻ hơn, phù hợp sinh viên và văn phòng');
+
+-- Upgrades
+INSERT INTO Upgrades (LaptopID, UpgradeType, OptionText) VALUES
+(1, 'RAM', 'Nâng cấp lên 32GB DDR5'),
+(1, 'SSD', 'Thêm ổ 1TB phụ'),
+(2, 'SSD', 'Nâng cấp 2TB NVMe'),
+(3, 'RAM', 'Hỗ trợ tối đa 64GB'),
+(4, 'SSD', 'Thêm ổ 2TB PCIe Gen4'),
+(5, 'RAM', 'Nâng cấp lên 32GB');
+
+-- Bundled Items
+INSERT INTO BundledItems (LaptopID, ItemName) VALUES
+(1, 'Chuột gaming Legion M500'),
+(1, 'Balo Lenovo Legion'),
+(2, 'Chuột không dây'),
+(3, 'Pad chuột RGB'),
+(4, 'Tai nghe gaming Legion'),
+(5, 'Túi chống sốc');
+
+-- Technical Specs (chi tiết)
+INSERT INTO TechnicalSpecs (LaptopID, CPU, RAM, Storage, GPU, MUXSwitch, Display, Webcam, Ports, Weight, Battery, OS) VALUES
+(1,
+'Intel Core i9-14900HX (24 nhân, turbo 5.8GHz)',
+'16GB DDR5 5600MHz',
+'1TB PCIe NVMe SSD Gen4',
+'NVIDIA GeForce RTX 5060 8GB GDDR7',
+'Có',
+'16" WQXGA (2560x1600), IPS, 500nits, 240Hz, 100% sRGB, Dolby Vision, G-Sync',
+'HD Webcam',
+'2x USB-C (DP, PD), 2x USB-A 3.2, 1x RJ45, 1x HDMI 2.1, 1x Jack 3.5mm, Power input',
+'~2.4kg',
+'4-cell, 80Wh, Super Rapid Charge',
+'Windows 11 Home/Pro bản quyền'),
+
+(2,
+'Intel Core i9-14900HX (24 nhân, turbo 5.8GHz)',
+'32GB DDR5 5600MHz',
+'1TB PCIe NVMe SSD Gen4',
+'NVIDIA GeForce RTX 4060 8GB GDDR6',
+'Có',
+'16" WQXGA (2560x1600), IPS, 500nits, 240Hz, 100% sRGB, Dolby Vision, G-Sync',
+'HD Webcam',
+'2x USB-C, 2x USB-A 3.2, 1x RJ45, 1x HDMI 2.1, Jack 3.5mm',
+'~2.5kg',
+'4-cell, 80Wh, Super Rapid Charge',
+'Windows 11 bản quyền'),
+
+(3,
+'Intel Ultra 9 275HX (24 nhân, turbo 5.8GHz)',
+'32GB DDR5 5600MHz',
+'1TB PCIe NVMe SSD Gen4',
+'NVIDIA GeForce RTX 5060 8GB GDDR7',
+'Có',
+'16" 2K+ OLED, 240Hz, HDR, Dolby Vision, G-Sync',
+'HD Webcam',
+'2x USB-C, 2x USB-A 3.2, 1x RJ45, 1x HDMI 2.1, Jack 3.5mm',
+'~2.45kg',
+'4-cell, 80Wh, Super Rapid Charge',
+'Windows 11 Pro bản quyền'),
+
+(4,
+'AMD Ryzen 9 8945HX (16C/32T, 2.5–5.4GHz, 16MB L2, 64MB L3, TDP 55–120W)',
+'16GB DDR5 5200MHz',
+'1TB PCIe NVMe M.2 SSD Gen4',
+'NVIDIA GeForce RTX 5060 8GB GDDR7',
+'Có',
+'16" WQXGA (2560x1600) IPS, 16:10, 500nits, 240Hz, 100% sRGB, Dolby Vision, FreeSync, G-Sync',
+'HD Webcam',
+'2x USB-C 10Gbps (DP 2.1, PD 3.0), 2x USB-A 3.2 Gen1, 1x USB-A Gen2, RJ45, HDMI 2.1, Jack 3.5mm, Power input',
+'2.3kg',
+'4-cell, 80Wh, Super Rapid Charge',
+'Windows 11 bản quyền'),
+
+(5,
+'Intel Core i7-13650HX (14 nhân, turbo 4.9GHz)',
+'24GB DDR5 4800MHz',
+'512GB PCIe NVMe SSD',
+'NVIDIA GeForce RTX 4060 8GB GDDR6',
+'Không',
+'15.6" FHD (1920x1080) IPS, 144Hz, 100% sRGB',
+'HD Webcam',
+'2x USB-A 3.2, 1x USB-C, 1x HDMI 2.1, 1x RJ45, Jack 3.5mm',
+'~2.35kg',
+'3-cell, 60Wh',
+'Windows 11 bản quyền');
+-- ==========================
+-- DELL LAPTOP
+-- ==========================
+
+-- Thêm Laptop
+INSERT INTO Laptop (Model, Year, Series) VALUES
+('Dell Inspiron 14 Plus 7440F 2025', 2025, 'Inspiron 14 Plus'),
+('Dell Pro 14 PC14250', 2024, 'Pro 14'),
+('Dell 16 Plus DB16250 2025', 2025, '16 Plus'),
+('Dell 14 Plus DB14250 2025', 2025, '14 Plus'),
+('Dell Inspiron 14 5445 2024', 2024, 'Inspiron 14');
+
+-- Specifications (ngắn gọn)
+INSERT INTO Specifications (LaptopID, CPU, RAM, Storage, GPU, Display) VALUES
+(6, 'Intel Core 7-240H', '16GB', '1TB SSD', 'Intel Iris Xe Graphics', '14\'\' 2K+ 120Hz'),
+(7, 'Intel Core 5-120U', '8GB', '512GB SSD', 'Intel Graphics', '14\'\' FHD+'),
+(8, 'Intel Core Ultra 7-256V', '16GB', '1TB SSD', 'Intel Arc Graphics', '16\'\' 2K+'),
+(9, 'Intel Core Ultra 7-256V', '16GB', '1TB SSD', 'Intel Arc Graphics', '14\'\' 2K+'),
+(10, 'AMD Ryzen 7 8840HS', '16GB', '512GB SSD', 'AMD Radeon 780M Graphics', '14\'\' 2K+');
+
+-- Features
+INSERT INTO Features (LaptopID, FeatureText) VALUES
+(6, 'Màn hình 2K+ 120Hz, thiết kế mỏng nhẹ, phù hợp công việc và học tập'),
+(7, 'Thiết kế gọn nhẹ, pin lâu, phù hợp văn phòng'),
+(8, 'Màn 16 inch 2K+ cho công việc sáng tạo nội dung, GPU Intel Arc'),
+(9, '14 inch nhỏ gọn, hiệu năng mạnh mẽ với Core Ultra 7'),
+(10, 'CPU Ryzen 7 kết hợp GPU Radeon 780M, tối ưu cho đa nhiệm và giải trí');
+
+-- Upgrades
+INSERT INTO Upgrades (LaptopID, UpgradeType, OptionText) VALUES
+(6, 'RAM', 'Hỗ trợ nâng cấp lên 32GB'),
+(6, 'SSD', 'Thêm ổ phụ 1TB NVMe'),
+(7, 'RAM', 'Hỗ trợ tối đa 16GB'),
+(8, 'RAM', 'Hỗ trợ tối đa 32GB DDR5'),
+(9, 'SSD', 'Thay SSD 2TB Gen4'),
+(10, 'RAM', 'Nâng cấp lên 32GB DDR5');
+
+-- Bundled Items
+INSERT INTO BundledItems (LaptopID, ItemName) VALUES
+(6, 'Túi chống sốc Dell'),
+(7, 'Chuột không dây Dell'),
+(8, 'Balo Dell Pro'),
+(9, 'Chuột Bluetooth + Pad chuột'),
+(10, 'Tai nghe Dell');
+
+-- Technical Specs (chi tiết)
+INSERT INTO TechnicalSpecs (LaptopID, CPU, RAM, Storage, GPU, MUXSwitch, Display, Webcam, Ports, Weight, Battery, OS) VALUES
+(6,
+'Intel Core 7-240H (16 nhân, turbo boost 5.0GHz)',
+'16GB LPDDR5x 6400MHz',
+'1TB PCIe NVMe SSD',
+'Intel Iris Xe Graphics',
+'Không',
+'14" 2K+ (2880x1800) IPS, 120Hz, 400 nits, 100% sRGB, Dolby Vision',
+'FHD Webcam',
+'2x USB-C Thunderbolt 4, 1x USB-A 3.2, 1x HDMI 2.1, Jack 3.5mm',
+'1.5kg',
+'4-cell, 70Wh',
+'Windows 11 Home'),
+
+(7,
+'Intel Core 5-120U (10 nhân, hiệu suất tiết kiệm điện)',
+'8GB DDR5 5200MHz',
+'512GB PCIe NVMe SSD',
+'Intel UHD/Intel Graphics',
+'Không',
+'14" FHD+ (1920x1200) IPS, 250 nits, 60Hz',
+'HD Webcam',
+'2x USB-A, 1x USB-C, HDMI, Jack 3.5mm',
+'1.4kg',
+'3-cell, 54Wh',
+'Windows 11 Home'),
+
+(8,
+'Intel Core Ultra 7-256V (AI Engine tích hợp)',
+'16GB DDR5 5600MHz',
+'1TB PCIe NVMe SSD Gen4',
+'Intel Arc Graphics',
+'Không',
+'16" 2K+ (2560x1600) IPS, 120Hz, 100% sRGB',
+'FHD Webcam IR',
+'2x Thunderbolt 4, 2x USB-A 3.2, HDMI 2.1, Jack 3.5mm',
+'~1.9kg',
+'4-cell, 80Wh',
+'Windows 11 Pro'),
+
+(9,
+'Intel Core Ultra 7-256V (AI Engine, turbo 5.0GHz)',
+'16GB DDR5 5600MHz',
+'1TB PCIe NVMe SSD',
+'Intel Arc Graphics',
+'Không',
+'14" 2K+ (2560x1600) OLED/IPS, 120Hz, Dolby Vision',
+'FHD Webcam IR',
+'2x USB-C Thunderbolt 4, 1x USB-A, HDMI, Jack 3.5mm',
+'~1.5kg',
+'4-cell, 70Wh',
+'Windows 11 Home'),
+
+(10,
+'AMD Ryzen 7 8840HS (8C/16T, turbo 5.1GHz, RDNA3 iGPU)',
+'16GB DDR5 5600MHz',
+'512GB PCIe NVMe SSD',
+'AMD Radeon 780M Graphics',
+'Không',
+'14" 2K+ (2560x1600) IPS, 120Hz, 400 nits',
+'FHD Webcam',
+'2x USB-C, 2x USB-A, HDMI 2.1, Jack 3.5mm',
+'1.45kg',
+'3-cell, 60Wh',
+'Windows 11 Home');
+-- ==========================
+-- ACER LAPTOP
+-- ==========================
+
+-- Thêm Laptop
+INSERT INTO Laptop (Model, Year, Series) VALUES
+('Acer Aspire Lite 15 AL15-72P-7232 NX.D4CSV.002', 2024, 'Aspire Lite 15'),
+('Acer Predator Helios Neo 2024 PHN16-72-93Q8', 2024, 'Predator Helios Neo'),
+('Acer Nitro V ANV15-51-55CA NH.QN8SV.004', 2024, 'Nitro V 15'),
+('Acer Nitro Lite 16 NL16-71G-71UJ NH.D59SV.002', 2024, 'Nitro Lite 16'),
+('Acer Nitro V 15 ProPanel ANV15-41-R7AP NH.QPGSV.002', 2024, 'Nitro V 15 ProPanel');
+
+-- Specifications (ngắn gọn)
+INSERT INTO Specifications (LaptopID, CPU, RAM, Storage, GPU, Display) VALUES
+(11, 'Intel Core i7-13620H', '16GB', '512GB SSD', 'Intel UHD Graphics', '15.6" FHD'),
+(12, 'Intel Core i9-14900HX', '16GB', '1TB SSD', 'NVIDIA RTX 4060 8GB', '16" 2K+ 180Hz'),
+(13, 'Intel Core i5-13420H', '16GB', '512GB SSD', 'NVIDIA RTX 4050 6GB', '15.6" FHD IPS 144Hz'),
+(14, 'Intel Core i7-13620H', '16GB', '512GB SSD', 'NVIDIA RTX 3050 6GB', '16" FHD IPS 165Hz'),
+(15, 'AMD Ryzen 5-7535HS', '16GB', '512GB SSD', 'NVIDIA RTX 2050 4GB', '15.6" FHD IPS 180Hz');
+
+-- Features
+INSERT INTO Features (LaptopID, FeatureText) VALUES
+(11, 'Dòng Aspire Lite, mỏng nhẹ, tối ưu cho văn phòng và học tập'),
+(12, 'Predator Helios Neo 2024: hiệu năng cao, GPU RTX 4060, màn hình 2K+ 180Hz'),
+(13, 'Nitro V với RTX 4050, phù hợp gaming FHD 144Hz'),
+(14, 'Nitro Lite 16: thiết kế gọn nhẹ, RTX 3050, màn hình 165Hz'),
+(15, 'Nitro V ProPanel: CPU Ryzen 5, RTX 2050, màn hình 180Hz cho gaming cơ bản');
+
+-- Upgrades
+INSERT INTO Upgrades (LaptopID, UpgradeType, OptionText) VALUES
+(11, 'RAM', 'Nâng cấp tối đa 32GB DDR5'),
+(12, 'SSD', 'Thêm khe SSD phụ 1TB NVMe'),
+(13, 'RAM', 'Hỗ trợ nâng cấp lên 32GB DDR5'),
+(14, 'SSD', 'Thay thế lên 2TB PCIe Gen4'),
+(15, 'RAM', 'Nâng cấp tối đa 32GB');
+
+-- Bundled Items
+INSERT INTO BundledItems (LaptopID, ItemName) VALUES
+(11, 'Túi laptop Acer'),
+(12, 'Balo Acer Predator'),
+(13, 'Chuột gaming Acer Nitro'),
+(14, 'Tai nghe gaming Acer'),
+(15, 'Pad chuột Acer Nitro');
+
+-- Technical Specs (chi tiết)
+INSERT INTO TechnicalSpecs (LaptopID, CPU, RAM, Storage, GPU, MUXSwitch, Display, Webcam, Ports, Weight, Battery, OS) VALUES
+(11,
+'Intel Core i7-13620H (10 nhân, turbo 4.9GHz)',
+'16GB DDR5 4800MHz',
+'512GB PCIe NVMe SSD',
+'Intel UHD Graphics',
+'Không',
+'15.6" FHD (1920x1080) IPS, 60Hz, 250 nits',
+'HD Webcam',
+'2x USB-A, 1x USB-C, HDMI, Jack 3.5mm',
+'~1.7kg',
+'3-cell, 50Wh',
+'Windows 11 Home'),
+
+(12,
+'Intel Core i9-14900HX (24 nhân, turbo 5.8GHz)',
+'16GB DDR5 5600MHz',
+'1TB PCIe NVMe SSD Gen4',
+'NVIDIA GeForce RTX 4060 8GB GDDR6',
+'Có',
+'16" 2K+ (2560x1600) IPS, 180Hz, 500 nits, 100% sRGB',
+'FHD Webcam',
+'2x USB-C Thunderbolt 4, 2x USB-A 3.2, HDMI 2.1, RJ45, Jack 3.5mm',
+'~2.5kg',
+'4-cell, 90Wh',
+'Windows 11 Home'),
+
+(13,
+'Intel Core i5-13420H (8 nhân, turbo 4.6GHz)',
+'16GB DDR5 4800MHz',
+'512GB PCIe NVMe SSD',
+'NVIDIA GeForce RTX 4050 6GB GDDR6',
+'Không',
+'15.6" FHD (1920x1080) IPS, 144Hz',
+'HD Webcam',
+'2x USB-A, 1x USB-C, HDMI, Jack 3.5mm',
+'~2.3kg',
+'3-cell, 57Wh',
+'Windows 11 Home'),
+
+(14,
+'Intel Core i7-13620H (10 nhân, turbo 4.9GHz)',
+'16GB DDR5 4800MHz',
+'512GB PCIe NVMe SSD',
+'NVIDIA GeForce RTX 3050 6GB GDDR6',
+'Không',
+'16" FHD (1920x1080) IPS, 165Hz',
+'FHD Webcam',
+'2x USB-A, 2x USB-C, HDMI, Jack 3.5mm',
+'~2.2kg',
+'3-cell, 60Wh',
+'Windows 11 Home'),
+
+(15,
+'AMD Ryzen 5 7535HS (6 nhân, 12 luồng, turbo 4.55GHz)',
+'16GB DDR5 4800MHz',
+'512GB PCIe NVMe SSD',
+'NVIDIA GeForce RTX 2050 4GB GDDR6',
+'Không',
+'15.6" FHD (1920x1080) IPS, 180Hz',
+'FHD Webcam',
+'2x USB-A, 1x USB-C, HDMI, Jack 3.5mm',
+'~2.2kg',
+'3-cell, 57Wh',
+'Windows 11 Home');
+-- ==========================
+-- ASUS LAPTOP
+-- ==========================
+
+-- Thêm Laptop
+INSERT INTO Laptop (Model, Year, Series) VALUES
+('ASUS TUF F15 FX506HE', 2021, 'TUF F15'),
+('Asus Vivobook S 14 Q423SA-U5512', 2024, 'Vivobook S 14'),
+('Asus Gaming Vivobook 16X K3605VC-RP521W', 2024, 'Vivobook 16X'),
+('Asus Rog Strix G16 2025 G615JMR-S5155W', 2025, 'ROG Strix G16'),
+('Asus ROG Zephyrus G14 2025 GA403UM', 2025, 'ROG Zephyrus G14');
+
+-- Specifications (ngắn gọn)
+INSERT INTO Specifications (LaptopID, CPU, RAM, Storage, GPU, Display) VALUES
+(16, 'Intel Core i7-11800H', '16GB', '512GB SSD', 'NVIDIA RTX 3050Ti 4GB', '15.6" FHD 144Hz'),
+(17, 'Intel Core Ultra 5 226V', '16GB', '512GB SSD', 'Intel Arc Graphics', '14.0" FHD+ OLED'),
+(18, 'Intel Core i5-13420H', '8GB', '512GB SSD', 'NVIDIA RTX 3050 4GB', '16" FHD+ 144Hz'),
+(19, 'Intel Core i7-14650HX', '32GB', '1TB SSD', 'NVIDIA RTX 5060 8GB', '16" 2K+ 240Hz'),
+(20, 'AMD Ryzen 9 270', '16GB', '1TB SSD', 'NVIDIA RTX 5060 8GB', '14" 3K OLED 120Hz');
+
+-- Features
+INSERT INTO Features (LaptopID, FeatureText) VALUES
+(16, 'Dòng TUF Gaming bền bỉ, GPU RTX 3050Ti, màn hình FHD 144Hz'),
+(17, 'Vivobook S 14 OLED: thiết kế mỏng nhẹ, màn OLED FHD+ sống động'),
+(18, 'Vivobook 16X Gaming: i5-13420H, RTX 3050, màn 16" FHD+ 144Hz'),
+(19, 'ROG Strix G16 2025: i7-14650HX, RTX 5060, RAM 32GB, màn 2K+ 240Hz'),
+(20, 'ROG Zephyrus G14 2025: Ryzen 9, RTX 5060, màn OLED 3K 120Hz, thiết kế Platinum White');
+
+-- Upgrades
+INSERT INTO Upgrades (LaptopID, UpgradeType, OptionText) VALUES
+(16, 'RAM', 'Hỗ trợ nâng cấp tối đa 32GB DDR4'),
+(17, 'SSD', 'Có khe SSD M.2 trống nâng cấp thêm 1TB'),
+(18, 'RAM', 'Nâng cấp tối đa 16GB DDR5'),
+(19, 'SSD', 'Thêm 1 khe SSD NVMe, nâng cấp tối đa 2TB'),
+(20, 'RAM', 'Nâng cấp tối đa 32GB DDR5');
+
+-- Bundled Items
+INSERT INTO BundledItems (LaptopID, ItemName) VALUES
+(16, 'Balo ASUS TUF'),
+(17, 'Túi chống sốc ASUS Vivobook'),
+(18, 'Chuột ASUS Gaming'),
+(19, 'Balo ROG Strix'),
+(20, 'Túi ROG Zephyrus Premium');
+
+-- Technical Specs (chi tiết)
+INSERT INTO TechnicalSpecs (LaptopID, CPU, RAM, Storage, GPU, MUXSwitch, Display, Webcam, Ports, Weight, Battery, OS) VALUES
+(16,
+'Intel Core i7-11800H (8 nhân 16 luồng, turbo 4.6GHz)',
+'16GB DDR4 3200MHz',
+'512GB PCIe NVMe SSD',
+'NVIDIA GeForce RTX 3050Ti 4GB GDDR6',
+'Không',
+'15.6" FHD (1920x1080) IPS, 144Hz',
+'HD Webcam',
+'2x USB-A, 1x USB-C, HDMI, RJ45, Jack 3.5mm',
+'~2.3kg',
+'3-cell, 48Wh',
+'Windows 11 Home'),
+
+(17,
+'Intel Core Ultra 5 226V (10 nhân, NPU tích hợp)',
+'16GB LPDDR5',
+'512GB PCIe Gen4 SSD',
+'Intel Arc Graphics',
+'Không',
+'14.0" FHD+ OLED, 100% DCI-P3, HDR True Black',
+'FHD Webcam IR hỗ trợ Windows Hello',
+'2x USB-C, 1x USB-A, HDMI, Jack 3.5mm',
+'~1.3kg',
+'4-cell, 63Wh',
+'Windows 11 Home'),
+
+(18,
+'Intel Core i5-13420H (8 nhân, turbo 4.6GHz)',
+'8GB DDR5 4800MHz',
+'512GB PCIe NVMe SSD',
+'NVIDIA GeForce RTX 3050 4GB GDDR6',
+'Không',
+'16" FHD+ (1920x1200) IPS, 144Hz',
+'HD Webcam',
+'2x USB-A, 1x USB-C, HDMI, Jack 3.5mm',
+'~1.9kg',
+'3-cell, 50Wh',
+'Windows 11 Home'),
+
+(19,
+'Intel Core i7-14650HX (16 nhân 24 luồng, turbo 5.2GHz)',
+'32GB DDR5 5600MHz',
+'1TB PCIe NVMe SSD Gen4',
+'NVIDIA GeForce RTX 5060 8GB GDDR7',
+'Có',
+'16" WQXGA (2560x1600) IPS, 240Hz, 100% sRGB, G-Sync',
+'FHD Webcam',
+'2x USB-C, 2x USB-A, HDMI 2.1, RJ45, Jack 3.5mm',
+'~2.5kg',
+'4-cell, 90Wh',
+'Windows 11 Home'),
+
+(20,
+'AMD Ryzen 9 270 (16 nhân, turbo 5.2GHz)',
+'16GB DDR5 5200MHz',
+'1TB PCIe NVMe SSD',
+'NVIDIA GeForce RTX 5060 8GB GDDR7',
+'Có',
+'14" 3K (2880x1800) OLED, 120Hz, 100% DCI-P3, HDR',
+'FHD Webcam IR hỗ trợ Windows Hello',
+'2x USB-C, 2x USB-A, HDMI 2.1, Jack 3.5mm',
+'~1.6kg',
+'4-cell, 76Wh',
+'Windows 11 Home');
+-- ==========================
+-- HP LAPTOP
+-- ==========================
+
+-- Thêm Laptop
+INSERT INTO Laptop (Model, Year, Series) VALUES
+('Laptop Gaming HP Victus 15-fa2731TX B85LNPA', 2024, 'Victus 15'),
+('HP Envy x360 2-in-1 16-ac0023dx', 2024, 'Envy x360 2-in-1'),
+('Laptop HP Victus 16-s0146AX 9Q993PA', 2024, 'Victus 16'),
+('HP OMEN 16 ap0084X', 2025, 'OMEN 16'),
+('Laptop Gaming HP Victus 15-fa2346TX', 2024, 'Victus 15');
+
+-- Specifications (ngắn gọn)
+INSERT INTO Specifications (LaptopID, CPU, RAM, Storage, GPU, Display) VALUES
+(21, 'Intel Core i5-13420H', '16GB', '512GB SSD', 'NVIDIA RTX 3050 6GB', '15.6" FHD 144Hz'),
+(22, 'Intel Core Ultra 7 155U', '16GB', '512GB SSD', 'Intel Integrated Graphics', '16" FHD+ Touch'),
+(23, 'AMD Ryzen 5 7640HS', '32GB', '512GB SSD', 'NVIDIA RTX 3050 6GB', '16.1" FHD 144Hz'),
+(24, 'AMD Ryzen 9 8945HX', '16GB', '1TB SSD', 'NVIDIA RTX 5060 8GB', '16" 2K+ 240Hz'),
+(25, 'Intel Core i7-13620H', '16GB', '1TB SSD', 'NVIDIA RTX 5060 8GB', '15.6" FHD 144Hz');
+
+-- Features
+INSERT INTO Features (LaptopID, FeatureText) VALUES
+(21, 'Victus 15 với RTX 3050, màn hình 144Hz phù hợp gaming phổ thông'),
+(22, 'HP Envy x360: màn hình cảm ứng FHD+, thiết kế xoay gập 360°'),
+(23, 'Victus 16: RAM 32GB, CPU Ryzen 5, gaming ổn định 144Hz'),
+(24, 'HP Omen 16 2025: Ryzen 9 8945HX, RTX 5060, màn 2K+ 240Hz mạnh mẽ'),
+(25, 'Victus 15 với Core i7, RTX 5060, SSD 1TB cho gaming hiệu năng cao');
+
+-- Upgrades
+INSERT INTO Upgrades (LaptopID, UpgradeType, OptionText) VALUES
+(21, 'RAM', 'Hỗ trợ nâng cấp tối đa 32GB DDR5'),
+(22, 'SSD', 'Có khe SSD M.2 trống, nâng cấp tối đa 2TB'),
+(23, 'RAM', 'Có thể nâng cấp lên 64GB DDR5'),
+(24, 'SSD', 'Thêm 1 khe SSD phụ, nâng cấp tối đa 2TB'),
+(25, 'RAM', 'Hỗ trợ nâng cấp tối đa 32GB DDR5');
+
+-- Bundled Items
+INSERT INTO BundledItems (LaptopID, ItemName) VALUES
+(21, 'Balo HP Victus'),
+(22, 'Bút cảm ứng HP Pen'),
+(23, 'Chuột gaming HP Victus'),
+(24, 'Balo HP Omen'),
+(25, 'Tai nghe HP Gaming');
+
+-- Technical Specs (chi tiết)
+INSERT INTO TechnicalSpecs (LaptopID, CPU, RAM, Storage, GPU, MUXSwitch, Display, Webcam, Ports, Weight, Battery, OS) VALUES
+(21,
+'Intel Core i5-13420H (8 nhân, turbo 4.6GHz)',
+'16GB DDR5 4800MHz',
+'512GB PCIe NVMe SSD',
+'NVIDIA GeForce RTX 3050 6GB GDDR6',
+'Không',
+'15.6" FHD (1920x1080) IPS, 144Hz',
+'HD Webcam',
+'2x USB-A, 1x USB-C, HDMI, RJ45, Jack 3.5mm',
+'~2.3kg',
+'3-cell, 52Wh',
+'Windows 11 Home'),
+
+(22,
+'Intel Core Ultra 7 155U (12 nhân, NPU AI tích hợp)',
+'16GB LPDDR5',
+'512GB PCIe NVMe SSD',
+'Intel Integrated Graphics (Xe)',
+'Không',
+'16" FHD+ (1920x1200) OLED, cảm ứng đa điểm',
+'FHD Webcam IR hỗ trợ Windows Hello',
+'2x USB-C, 1x USB-A, HDMI 2.1, Jack 3.5mm',
+'~1.5kg',
+'4-cell, 66Wh',
+'Windows 11 Home'),
+
+(23,
+'AMD Ryzen 5 7640HS (6 nhân, turbo 5.0GHz)',
+'32GB DDR5 5200MHz',
+'512GB PCIe NVMe SSD',
+'NVIDIA GeForce RTX 3050 6GB GDDR6',
+'Không',
+'16.1" FHD (1920x1080) IPS, 144Hz',
+'FHD Webcam',
+'2x USB-A, 2x USB-C, HDMI, RJ45, Jack 3.5mm',
+'~2.4kg',
+'4-cell, 70Wh',
+'Windows 11 Home'),
+
+(24,
+'AMD Ryzen 9 8945HX (16 nhân, 32 luồng, turbo 5.4GHz)',
+'16GB DDR5 5600MHz',
+'1TB PCIe NVMe SSD',
+'NVIDIA GeForce RTX 5060 8GB GDDR7',
+'Có',
+'16" WQXGA (2560x1600) IPS, 240Hz, 100% sRGB, FreeSync',
+'FHD Webcam',
+'2x USB-C, 2x USB-A, HDMI 2.1, RJ45, Jack 3.5mm',
+'~2.5kg',
+'4-cell, 90Wh',
+'Windows 11 Home'),
+
+(25,
+'Intel Core i7-13620H (10 nhân, turbo 4.9GHz)',
+'16GB DDR5 4800MHz',
+'1TB PCIe NVMe SSD',
+'NVIDIA GeForce RTX 5060 8GB GDDR7',
+'Có',
+'15.6" FHD (1920x1080) IPS, 144Hz',
+'FHD Webcam',
+'2x USB-A, 1x USB-C, HDMI, RJ45, Jack 3.5mm',
+'~2.35kg',
+'3-cell, 57Wh',
+'Windows 11 Home');

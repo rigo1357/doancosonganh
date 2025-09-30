@@ -7,89 +7,226 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="header">
-    <div class="container">
+    <header class="header">
+    <div class="container header-inner">
       <div class="brand">
-        <div class="logo">PL</div>
+        <div class="logo" style="padding:0;overflow:hidden;display:flex;align-items:center;justify-content:center">
+          <a href="index.html" style="display:block;width:100%;height:100%">
+            <img src="Image/Logo.jpg" alt="Logo PPTLaptop" style="width:100%;height:100%;object-fit:contain;" />
+          </a>
+        </div>
         <div>
-          <div style="font-weight:700">PPTLaptop</div>
-          <div style="font-size:12px;color:var(--muted)">Mua laptop - giao tận nơi</div>
+          <div class="brand-title">PPTStore</div>
+          <div class="brand-sub">Mua laptop - giao tận nơi</div>
         </div>
       </div>
-
-      <nav>
-        <a href="index.html">Trang chủ</a>
-        <a href="products.html">Sản phẩm</a>
+      <div class="search">
+          <input id="search" placeholder="🔍 Tìm kiếm laptop..." autocomplete="off" />
+          <div id="search-results" style="position:absolute;left:0;right:0;top:110%;z-index:1000;background:#fff;border-radius:0 0 10px 10px;box-shadow:0 4px 16px rgba(0,0,0,0.08);display:none;max-height:340px;overflow:auto;padding:8px 0;"></div>
+        </div>
+      <nav class="nav">
+        <a href="index.html" class="active">Trang chủ</a>
+        <div class="dropdown">
+          <a href="products.html" class="dropdown-toggle">Sản phẩm</a>
+          <div class="dropdown-menu mega-menu">
+            <div class="mega-col">
+              <div class="mega-title">Laptop Dell</div>
+              <a href="#">Dell Alienware</a>
+              <a href="#">Dell Precision</a>
+              <a href="#">Dell XPS</a>
+              <a href="#">Dell Vostro</a>
+              <a href="#">Dell Inspiron</a>
+              <a href="#">Dell Latitude</a>
+              <a href="#">Dell G-Seri</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-title">Laptop Acer</div>
+              <a href="#">Acer Aspire</a>
+              <a href="#">Acer Nitro</a>
+              <a href="#">Acer Spin</a>
+              <a href="#">Acer Predator</a>
+              <a href="#">Acer Swift</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-title">Laptop Asus</div>
+              <a href="#">Asus Tuf</a>
+              <a href="#">Asus ZenBook</a>
+              <a href="#">Asus VivoBook</a>
+              <a href="#">Asus Rog</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-title">Laptop Lenovo</div>
+              <a href="#">Lenovo Ideapad</a>
+              <a href="#">Lenovo ThinkBook</a>
+              <a href="#">Lenovo Yoga</a>
+              <a href="#">Lenovo Legion</a>
+              <a href="#">Lenovo Thinkpad</a>
+              <a href="#">Lenovo LOQ</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-title">Laptop HP</div>
+              <a href="#">HP Elitebook</a>
+              <a href="#">HP Spectre</a>
+              <a href="#">HP Pavilion</a>
+              <a href="#">HP Probook</a>
+              <a href="#">HP Omen</a>
+              <a href="#">HP Envy</a>
+              <a href="#">HP Zbook</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-title">Laptop MSI</div>
+              <a href="#">MSI G-Seri</a>
+              <a href="#">MSI Bravo</a>
+              <a href="#">MSI Modern</a>
+            </div>
+          </div>
+        </div>
         <a href="contact.html">Liên hệ</a>
         <a href="Login.html" id="login-link">Đăng nhập/Đăng ký</a>
-        <span id="user-info" style="margin-left:12px;display:none;color:var(--primary);font-weight:600"></span>
-        <a href="cart.html" style="margin-left:12px">Giỏ (<span id="cart-count">0</span>)</a>
-        <a href="#" id="logout-link" style="margin-left:12px;display:none;color:red;font-weight:600">Đăng xuất</a>
+        <span id="user-info" class="user-info"></span>
+        <a href="cart.html">🛒 Giỏ (<span id="cart-count">0</span>)</a>
+        <a href="#" id="logout-link" class="logout">Đăng xuất</a>
       </nav>
     </div>
+
+
   </header>
 
-  <main class="container">
-    <section class="hero">
-      <div class="search">
-        <input id="search" placeholder="Tìm kiếm ..." />
-      </div>
-      <div class="cart-mini">
-        <div style="font-weight:700">Giỏ hàng</div>
-        <div class="small text-muted" id="cart-mini-count">0 sản phẩm</div>
-      </div>
-    </section>
-
-    <section>
-      <h3>Sản phẩm nổi bật</h3>
-      <div class="grid" id="product-list"></div>
-    </section>
-  </main>
-
-<footer>
-  <div class="container footer-grid">
-    <div>
-      <h4>Liên hệ</h4>
-      <p>📞 0971 476 878</p>
-      <p>📧 pptlaptop@gmail.com</p>
+  <!-- Sản phẩm -->
+<!-- Carousel -->
+<main class="container">
+  <div class="carousel">
+    <button class="carousel-btn prev" id="prevBtn" aria-label="Trước" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);z-index:2;background:rgba(0,0,0,0.5);color:#fff;font-size:22px;padding:8px 12px;border-radius:50%;border:none;cursor:pointer;">&#8592;</button>
+    <button class="carousel-btn next" id="nextBtn" aria-label="Sau" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);z-index:2;background:rgba(0,0,0,0.5);color:#fff;font-size:22px;padding:8px 12px;border-radius:50%;border:none;cursor:pointer;">&#8594;</button>
+    <div class="carousel-track" id="carousel-track">
+      <div class="carousel-slide"><img src="/Image/khuyenmai/thumb_salelaptop_800x450.png" alt="Banner 1"></div>
+      <div class="carousel-slide"><img src="/Image/khuyenmai/tet2_800x450.jpg" alt="Banner 2"></div>
+      <div class="carousel-slide"><img src="/Image/khuyenmai/laptop_cu_800x450.jpg" alt="Banner 3"></div>
+      <div class="carousel-slide"><img src="/Image/khuyenmai/800-4509_800x450.png" alt="Banner 4"></div>
     </div>
-    <div>
-      <h4>Địa chỉ</h4>
-      <p class="small text-muted">06 Trần Văn Ơn, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam</p>
-      <div style="margin-top:8px">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.996246850356!2d106.6747335!3d10.979613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d1276f4b7577%3A0x54075879a0f2301!2s06%20Tr%E1%BA%A7n%20V%C4%83n%20%C6%A0n%2C%20Ph%C3%BA%20Ho%C3%A0%2C%20Th%E1%BB%A7%20D%E1%BA%A7u%20M%E1%BB%99t%2C%20B%C3%ACnh%20D%C6%B0%C6%A1ng%2C%20Vi%E1%BB%87t%20Nam!5e0!3m2!1svi!2s!4v1727111111111!5m2!1svi!2s"
-          width="250"
-          height="180"
-          style="border:0;border-radius:8px;"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
-      </div>
-    </div>
+    <div class="carousel-dots" id="carousel-dots"></div>
   </div>
 
-  <!-- Phần bản quyền căn giữa -->
-  <div style="text-align:center; color:#888; margin:12px auto 0; font-size:13px; width:100%;">
-    &copy; 2025 PPTLaptop. All rights reserved.
-  </div>
-</footer>
+  <!-- Sản phẩm nổi bật -->
+<section style="margin-top:32px">
+  <h2 class="section-title">
+    <a href="pd/products-study.html">Học tập - Văn phòng</a>
+  </h2>
+  <div class="grid" id="cat-study"></div>
+</section>
+
+<section style="margin-top:32px">
+  <h2 class="section-title">
+    <a href="pd/products-gaming.html">Laptop Gaming</a>
+  </h2>
+  <div class="grid" id="cat-gaming"></div>
+</section>
+
+<section style="margin-top:32px">
+  <h2 class="section-title">
+    <a href="pd/products-design.html">Laptop Đồ họa</a>
+  </h2>
+  <div class="grid" id="cat-design"></div>
+</section>
+
+<section style="margin-top:32px">
+  <h2 class="section-title">
+    <a href="pd/products-ultra.html">Laptop Mỏng nhẹ cao cấp</a>
+  </h2>
+  <div class="grid" id="cat-ultra"></div>
+</section>
+
+</main>
 
 
 
-  <!-- Chatbox -->
+
+  <!-- Footer mới hiện đại -->
+  <footer>
+
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h6>PPTLaptop</h6>
+            <p>Địa chỉ: 06 Trần Văn Ơn, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam</p>
+            <p>Hotline: 0971 476 878</p>
+            <p>Email: pptlaptop@gmail.com</p>
+            <div style="margin-top:8px">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.996246850356!2d106.6747335!3d10.979613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d1276f4b7577%3A0x54075879a0f2301!2s06%20Tr%E1%BA%A7n%20V%C4%83n%20%C6%A0n%2C%20Ph%C3%BA%20Ho%C3%A0%2C%20Th%E1%BB%A7%20D%E1%BA%A7u%20M%E1%BB%99t%2C%20B%C3%ACnh%20D%C6%B0%C6%A1ng%2C%20Vi%E1%BB%87t%20Nam!5e0!3m2!1svi!2s!4v1727111111111!5m2!1svi!2s"
+                width="250"
+                height="180"
+                style="border:0;border-radius:8px;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h6>THÔNG TIN CÔNG TY</h6>
+            <ul>
+              <li><a href="#">Giới thiệu công ty</a></li>
+              <li><a href="#">Tuyển dụng</a></li>
+              <li><a href="tel:0971476878">Gửi góp ý, khiếu nại</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h6>CHÍNH SÁCH CÔNG TY</h6>
+            <ul>
+              <li><a href="#">Chính sách chất lượng</a></li>
+              <li><a href="#">Chính sách bảo hành</a></li>
+              <li><a href="#">Chính sách đổi trả</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2025 PPTLaptop. All Rights Reserved</p>
+      </div>
+    </div>
+  </footer>
+
   <style>
-    #chatbox { position: fixed; right: 18px; bottom: 18px; width:320px; max-height:420px; display:flex;flex-direction:column;border-radius:12px;overflow:hidden;box-shadow:0 10px 30px rgba(10,20,60,0.15);z-index:9999; font-family:sans-serif }
-    #chatbox .header { background:#1976d2; color:#fff;padding:10px;font-weight:700; cursor:pointer }
-    #chatbox .body { background:#fff;padding:10px;flex:1;overflow:auto;font-size:14px }
-    #chatbox .input { display:flex;border-top:1px solid #eee;background:#fafafa;padding:8px }
-    #chatbox input { flex:1;padding:8px;border-radius:8px;border:1px solid #e6e9ee;margin-right:8px }
-    #chatbox button { padding:8px 10px;border-radius:8px;border:none;background:#1976d2;color:#fff;cursor:pointer }
-    .msg { margin:6px 0;padding:8px;border-radius:8px;max-width:82% }
-    .msg.user { background:#eef6ff;margin-left:auto }
-    .msg.bot { background:#f1f6ee }
+    /* Footer policy section */
+  
+
+    /* Ảnh trong carousel luôn tràn khung, không thừa viền trắng */
+           .carousel {
+              width: 100%;
+              max-width: 100%;
+              height: 600px;
+              position: relative;
+              overflow: hidden;
+              border-radius: 18px;
+              background: #fff;
+            }
+    .carousel-track {
+      height: 100%;
+      display: flex;
+    }
+    .carousel-slide {
+      height: 100%;
+      min-width: 100%;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 18px;
+      background: #fff;
+    }
   </style>
+
+
 
 <div id="chatbox">
   <div class="header" id="chat-toggle">💬 Hỗ trợ — PPTLaptop</div>
@@ -104,85 +241,153 @@
 
 
 
-  <script>
+<script type="module">
     /* ------------------------
        Dữ liệu sản phẩm mẫu
     -------------------------*/
-    const products = [
-      {id:1, name:'Asus TUF Gaming A15', brand:'Asus', price:24800000, desc:'Ryzen 7, 16GB RAM, RTX3050, 512GB SSD', img:'Image/Asus.webp'},
-      {id:2, name:'Dell Inspiron 15', brand:'Dell', price:16800000, desc:'Intel i5, 8GB RAM, 256GB SSD', img:'Image/LaptopDell.webp'},
-      {id:3, name:'HP Pavilion 14', brand:'HP', price:14900000, desc:'Intel i3, 8GB RAM, 256GB SSD', img:'Image/HP.jpg'},
-      {id:4, name:'MacBook Air M2', brand:'Apple', price:27900000, desc:'Apple M2, 8GB, 256GB SSD', img:'Image/MacBook.webp'},
-      {id:5, name:'Lenovo IdeaPad 3', brand:'Lenovo', price:11900000, desc:'Ryzen 5, 8GB RAM, 512GB SSD', img:'Image/Lenovo.webp'},
-      {id:6, name:'Asus Vivobook 15', brand:'Asus', price:12900000, desc:'Intel i5, 8GB RAM, 512GB SSD', img:'Image/Asus.webp'}
-    ];
+  import { products } from '/products.js';
 
-    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    function updateCartCount(){
-      document.getElementById('cart-count').innerText = cart.length;
-      document.getElementById('cart-mini-count').innerText = cart.length + ' sản phẩm';
-      document.getElementById('cart-mini-count').classList.toggle('text-muted', cart.length===0);
-      localStorage.setItem('cart', JSON.stringify(cart));
-    }
-    updateCartCount();
 
-    function money(v){ return v.toLocaleString('vi-VN') + ' ₫'; }
-    function renderProducts(list){
-      const container = document.getElementById('product-list');
-      container.innerHTML = '';
-      list.slice(0,6).forEach(p=>{
-        const card = document.createElement('div'); card.className='card';
-        card.innerHTML = `
-          <img src="${p.img}" alt="${p.name}" />
-          <div class="title">${p.name}</div>
-          <div class="desc">${p.desc} — <span class="small text-muted">${p.brand}</span></div>
-          <div class="price-row">
-            <div class="price">${money(p.price)}</div>
-            <div>
-              <button class="btn secondary" onclick="viewDetail(${p.id})">Xem</button>
-              <button class="btn" onclick="addToCart(${p.id})">Thêm</button>
-            </div>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
-    renderProducts(products);
+  function money(v){ return v.toLocaleString('vi-VN') + ' ₫'; }
 
-    function addToCart(id){
-      const p = products.find(x=>x.id===id);
-      if(!p) return alert('Sản phẩm không tồn tại');
-      cart.push({...p, qty:1});
-      updateCartCount();
-      alert('Đã thêm: ' + p.name);
-    }
-    function viewDetail(id){
-      window.location.href = 'product-detail.html?id=' + id;
-    }
-
-    document.getElementById('search').addEventListener('input', e=>{
-      const q = e.target.value.trim().toLowerCase();
-      if(!q){ renderProducts(products); return; }
-      const filtered = products.filter(p => (p.name + ' ' + p.desc + ' ' + p.brand).toLowerCase().includes(q));
-      renderProducts(filtered);
+  function renderCategory(containerId, cat){
+    const container = document.getElementById(containerId);
+    container.innerHTML = '';
+    products.filter(p=>p.category===cat).forEach(p=>{
+      const card = document.createElement('div'); 
+      card.className='card';
+      card.innerHTML = `
+        <img src="${p.img}" alt="${p.name}" />
+        <div class="title">${p.name}</div>
+        <div class="desc">${p.desc} — <span class="small text-muted">${p.brand}</span></div>
+        <div class="price">${money(p.price)}</div>
+        <div class="price-row">
+          <button class="btn secondary">Xem</button>
+        </div>
+      `;
+      // Gán sự kiện click cho nút Xem
+      const btn = card.querySelector('button.btn.secondary');
+      btn.addEventListener('click', () => viewDetail(p.id));
+      container.appendChild(card);
     });
+  }
 
-const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+  // Gọi render cho từng section
+  renderCategory('cat-study','study');
+  renderCategory('cat-gaming','gaming');
+  renderCategory('cat-design','design');
+  renderCategory('cat-ultra','ultra');
 
-if(user){
-  // Ẩn nút đăng nhập, hiện chào user + đăng xuất
-  document.getElementById('login-link').style.display = 'none';
-  document.getElementById('user-info').style.display = 'inline-block';
-  document.getElementById('user-info').innerText = 'Xin chào, ' + user.email;
-  document.getElementById('logout-link').style.display = 'inline-block';
-}
+  // Hàm render sản phẩm cho tìm kiếm
+  function renderProducts(list){
+    // Hiển thị sản phẩm tìm kiếm ở cat-study (hoặc tạo 1 khu vực riêng nếu muốn)
+    const container = document.getElementById('cat-study');
+    if(!container) return;
+    container.innerHTML = '';
+    list.forEach(p=>{
+      const card = document.createElement('div');
+      card.className='card';
+      card.innerHTML = `
+        <img src="${p.img}" alt="${p.name}" />
+        <div class="title">${p.name}</div>
+        <div class="desc">${p.desc} — <span class="small text-muted">${p.brand}</span></div>
+        <div class="price">${money(p.price)}</div>
+        <div class="price-row">
+          <button class="btn secondary" onclick="viewDetail(${p.id})">Xem</button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
 
-// Xử lý khi click "Đăng xuất"
-document.getElementById('logout-link').addEventListener('click', e=>{
-  e.preventDefault();
-  localStorage.removeItem('currentUser'); // xoá user
-  window.location.reload(); // reload lại để reset trạng thái
-});
+  // Cập nhật số lượng sản phẩm trong giỏ
+  function updateCartCount(){
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    let count = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+    document.getElementById('cart-count').innerText = count;
+  }
+
+  // Gọi cập nhật số lượng khi load trang
+  updateCartCount();
+
+  function addToCart(id){
+    const p = products.find(x=>x.id===id);
+    if(!p) return alert('Sản phẩm không tồn tại');
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    // Nếu đã có sản phẩm thì tăng số lượng
+    let found = cart.find(x=>x.id===id);
+    if(found) found.qty = (found.qty||1) + 1;
+    else cart.push({...p, qty:1});
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    alert('Đã thêm: ' + p.name);
+  }
+
+  function viewDetail(id){
+    if (!id || isNaN(id)) {
+      alert('Không tìm thấy sản phẩm!');
+      return;
+    }
+    window.location.href = 'product-detail.html?id=' + id;
+  }
+
+  // Hiển thị kết quả tìm kiếm dưới thanh tìm kiếm
+  const searchInput = document.getElementById('search');
+  const searchResults = document.getElementById('search-results');
+
+  searchInput.addEventListener('input', e => {
+    const q = e.target.value.trim().toLowerCase();
+    if (!q) {
+      searchResults.style.display = 'none';
+      searchResults.innerHTML = '';
+      return;
+    }
+    const filtered = products.filter(p => (p.name + ' ' + p.desc + ' ' + p.brand).toLowerCase().includes(q));
+    if (filtered.length === 0) {
+      searchResults.innerHTML = '<div style="padding:12px;color:#888;text-align:center">Không tìm thấy sản phẩm</div>';
+      searchResults.style.display = 'block';
+      return;
+    }
+    searchResults.innerHTML = filtered.map(p => `
+      <div class="search-item" style="display:flex;align-items:center;padding:6px 16px;gap:12px;cursor:pointer;transition:background 0.2s" onclick="window.location='product-detail.html?id=${p.id}'" onmouseover="this.style.background='#f5f7fa'" onmouseout="this.style.background='none'">
+        <img src="${p.img}" alt="${p.name}" style="width:48px;height:48px;object-fit:cover;border-radius:6px;border:1px solid #eee" />
+        <div style="flex:1">
+          <div style="font-weight:500;font-size:15px">${p.name}</div>
+          <div style="color:#1976d2;font-weight:600">${money(p.price)}</div>
+          <div style="font-size:13px;color:#555;margin-top:2px">${p.desc}</div>
+        </div>
+      </div>
+    `).join('');
+    searchResults.style.display = 'block';
+  });
+
+  // Ẩn kết quả khi blur khỏi input (trừ khi click vào kết quả)
+  searchInput.addEventListener('blur', ()=>{
+    setTimeout(()=>{ searchResults.style.display = 'none'; }, 180);
+  });
+  searchInput.addEventListener('focus', ()=>{
+    if(searchInput.value.trim()) searchResults.style.display = 'block';
+  });
+
+  // Đảm bảo cập nhật số lượng khi vào lại trang
+  window.addEventListener('storage', updateCartCount);
+
+  const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+
+  if(user){
+    // Ẩn nút đăng nhập, hiện chào user + đăng xuất
+    document.getElementById('login-link').style.display = 'none';
+    document.getElementById('user-info').style.display = 'inline-block';
+    document.getElementById('user-info').innerText = 'Xin chào, ' + user.email;
+    document.getElementById('logout-link').style.display = 'inline-block';
+  }
+
+  // Xử lý khi click "Đăng xuất"
+  document.getElementById('logout-link').addEventListener('click', e=>{
+    e.preventDefault();
+    localStorage.removeItem('currentUser'); // xoá user
+    window.location.reload(); // reload lại để reset trạng thái
+  });
 
     /* --- Chatbox Script --- */
 const chatToggle = document.getElementById('chat-toggle');
@@ -231,7 +436,86 @@ chatInput.addEventListener('keydown', e=>{
   if(e.key==='Enter') sendChatMessage();
 });
 
+/* --- Carousel Script --- */
+const track = document.getElementById('carousel-track');
+const slides = document.querySelectorAll('.carousel-slide');
+const dotsContainer = document.getElementById('carousel-dots');
 
+let currentIndex = 0;
+let autoSlide;
+
+// tạo dots
+slides.forEach((_, i) => {
+  const dot = document.createElement('span');
+  if (i === 0) dot.classList.add('active');
+  dot.addEventListener('click', ()=> goToSlide(i));
+  dotsContainer.appendChild(dot);
+});
+
+function updateCarousel(){
+  track.style.transform = `translateX(-${currentIndex * 100}%)`;
+  document.querySelectorAll('.carousel-dots span').forEach((d,i)=>{
+    d.classList.toggle('active', i===currentIndex);
+  });
+}
+
+function goToSlide(i){
+  currentIndex = (i + slides.length) % slides.length;
+  updateCarousel();
+}
+
+// --- SWIPE (Touch + Mouse Drag) ---
+let startX = 0, endX = 0, isDragging = false;
+// Touch events
+track.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
+  isDragging = true;
+});
+track.addEventListener('touchmove', e => {
+  if (!isDragging) return;
+  endX = e.touches[0].clientX;
+});
+track.addEventListener('touchend', () => {
+  if (!isDragging) return;
+  if (startX - endX > 50) goToSlide(currentIndex + 1);
+  else if (endX - startX > 50) goToSlide(currentIndex - 1);
+  isDragging = false;
+});
+// Mouse events
+track.addEventListener('mousedown', e => {
+  startX = e.clientX;
+  isDragging = true;
+});
+track.addEventListener('mousemove', e => {
+  if (!isDragging) return;
+  endX = e.clientX;
+});
+track.addEventListener('mouseup', () => {
+  if (!isDragging) return;
+  if (startX - endX > 50) goToSlide(currentIndex + 1);
+  else if (endX - startX > 50) goToSlide(currentIndex - 1);
+  isDragging = false;
+});
+track.addEventListener('mouseleave', () => {
+  isDragging = false;
+});
+
+// Nút mũi tên chuyển slide
+document.getElementById('prevBtn').addEventListener('click', () => goToSlide(currentIndex - 1));
+document.getElementById('nextBtn').addEventListener('click', () => goToSlide(currentIndex + 1));
+
+/* ----- AUTO SLIDE ----- */
+function startAutoSlide(){
+  autoSlide = setInterval(()=> goToSlide(currentIndex + 1), 5000);
+}
+function stopAutoSlide(){
+  clearInterval(autoSlide);
+}
+document.querySelector('.carousel').addEventListener('mouseenter', stopAutoSlide);
+document.querySelector('.carousel').addEventListener('mouseleave', startAutoSlide);
+
+updateCarousel();
+startAutoSlide();
 </script>
 </body>
 </html>

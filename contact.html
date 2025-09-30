@@ -1,61 +1,123 @@
 <!doctype html>
 <html lang="vi">
-<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Liên hệ - PPTLaptop</title><link rel="stylesheet" href="style.css"></head>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Liên hệ - PPTLaptop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 <body>
-  <header class="header">
-    <div class="container">
+  <!-- Header -->
+    <header class="header">
+    <div class="container header-inner">
       <div class="brand">
-        <div class="logo">PL</div>
+        <div class="logo" style="padding:0;overflow:hidden;display:flex;align-items:center;justify-content:center">
+          <a href="index.html" style="display:block;width:100%;height:100%">
+            <img src="Image/Logo.jpg" alt="Logo PPTLaptop" style="width:100%;height:100%;object-fit:contain;" />
+          </a>
+        </div>
         <div>
-          <div style="font-weight:700">PPTLaptop</div>
-          <div style="font-size:12px;color:var(--muted)">Mua laptop - giao tận nơi</div>
+          <div class="brand-title">PPTStore</div>
+          <div class="brand-sub">Mua laptop - giao tận nơi</div>
         </div>
       </div>
-      <nav><a href="index.html">Trang chủ</a><a href="products.html">Sản phẩm</a><a href="cart.html">Giỏ hàng</a></nav>
+
+      <nav class="nav">
+        <a href="index.html" >Trang chủ</a>
+        <a href="products.html">Sản phẩm</a>
+        <a href="contact.html" class="active">Liên hệ</a>
+        <a href="Login.html" id="login-link">Đăng nhập/Đăng ký</a>
+        <span id="user-info" class="user-info"></span>
+        <a href="cart.html">🛒 Giỏ (<span id="cart-count">0</span>)</a>
+        <a href="#" id="logout-link" class="logout">Đăng xuất</a>
+      </nav>
     </div>
   </header>
 
+  <!-- Contact -->
   <main class="container">
-    <h3>Liên hệ / Đặt hàng</h3>
+    <h2 class="section-title">📩 Liên hệ / Đặt hàng</h2>
 
-    <div style="display:grid;grid-template-columns:1fr 360px;gap:18px">
+    <div class="contact-grid">
+      <!-- Form -->
       <form id="contact-form" class="contact-form">
-        <label>Họ tên</label>
-        <input id="c-name" required />
-        <label>Email</label>
-        <input id="c-email" type="email" required />
-        <label>Nội dung</label>
-        <textarea id="c-msg" rows="6" required style="padding:8px;border-radius:8px;border:1px solid #eee"></textarea>
-        <div style="margin-top:8px">
-          <button class="btn" type="submit">Gửi liên hệ</button>
-        </div>
+        <label for="c-name">👤 Họ tên</label>
+        <input id="c-name" required placeholder="Nhập họ tên của bạn" />
+
+        <label for="c-phone">📱 Số điện thoại</label>
+        <input id="c-phone" type="tel" required placeholder="Ví dụ: 0971xxxxxx" />
+
+        <label for="c-email">📧 Email</label>
+        <input id="c-email" type="email" required placeholder="example@gmail.com" />
+
+        <label for="c-msg">📝 Nội dung</label>
+        <textarea id="c-msg" rows="6" required placeholder="Bạn muốn mua laptop cho nhu cầu nào?"></textarea>
+
+        <button class="btn" type="submit">Gửi liên hệ</button>
+        <div id="contact-status" class="form-status"></div>
       </form>
 
-      <div style="background:var(--card);padding:14px;border-radius:12px;box-shadow:var(--shadow)">
-        <h4>Thông tin cửa hàng</h4>
-        <p class="small text-muted">📞 0971 476 878</p>
-        <p class="small text-muted">📧 pptlaptop@example.com</p>
-        <p class="small text-muted">🏠 06 Trần Văn Ơn, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam</p>
-        <div style="margin-top:8px">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.996246850356!2d106.6747335!3d10.979613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d1276f4b7577%3A0x54075879a0f2301!2s06%20Tr%E1%BA%A7n%20V%C4%83n%20%C6%A0n%2C%20Ph%C3%BA%20Ho%C3%A0%2C%20Th%E1%BB%A7%20D%E1%BA%A7u%20M%E1%BB%99t%2C%20B%C3%ACnh%20D%C6%B0%C6%A1ng%2C%20Vi%E1%BB%87t%20Nam!5e0!3m2!1svi!2s!4v1727111111111!5m2!1svi!2s" width="100%" height="160" style="border:0"></iframe>
-        </div>
+      <!-- Info -->
+      <div class="contact-info">
+        <h4>🏬 Thông tin cửa hàng</h4>
+        <p>📞 0971 476 878</p>
+        <p>📧 pptlaptop@gmail.com</p>
+        <p>🏠 06 Trần Văn Ơn, Phú Hoà, Thủ Dầu Một, Bình Dương</p>
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.996246850356!2d106.6747335!3d10.979613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d1276f4b7577%3A0x54075879a0f2301!2s06%20Tr%E1%BA%A7n%20V%C4%83n%20%C6%A0n!5e0!3m2!1svi!2s!4v1727111111111"
+          width="100%" height="200" style="border:0;border-radius:8px;" allowfullscreen="" loading="lazy">
+        </iframe>
       </div>
     </div>
   </main>
 
+  <footer>
+    <div class="footer-copy">
+      &copy; 2025 PPTLaptop. All rights reserved.
+    </div>
+  </footer>
+
+  
+  <!-- JS -->
   <script>
-    document.getElementById('contact-form').addEventListener('submit', function(e){
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('contact-status');
+
+    form.addEventListener('submit', function(e){
       e.preventDefault();
       const name = document.getElementById('c-name').value.trim();
+      const phone = document.getElementById('c-phone').value.trim();
       const email = document.getElementById('c-email').value.trim();
       const msg = document.getElementById('c-msg').value.trim();
-      if(!name||!email||!msg) return alert('Nhập đầy đủ thông tin');
-      // demo: lưu vào localStorage (hoặc gửi backend sau này)
+
+      // Regex check
+      const emailRegex = /^[\\w.-]+@[\\w.-]+\\.\\w+$/;
+      const phoneRegex = /^(0[0-9]{9})$/;  // 10 số, bắt đầu bằng 0
+
+      if(!name || !phone || !email || !msg){
+        status.textContent = "⚠️ Vui lòng nhập đầy đủ thông tin.";
+        status.className = "form-status error";
+        return;
+      }
+      if(!phoneRegex.test(phone)){
+        status.textContent = "⚠️ Số điện thoại không hợp lệ (phải 10 số, bắt đầu bằng 0).";
+        status.className = "form-status error";
+        return;
+      }
+      if(!emailRegex.test(email)){
+        status.textContent = "⚠️ Email không hợp lệ.";
+        status.className = "form-status error";
+        return;
+      }
+
+      // demo: lưu vào localStorage
       let contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
-      contacts.push({name,email,msg, time: new Date().toISOString()});
+      contacts.push({name, phone, email, msg, time: new Date().toISOString()});
       localStorage.setItem('contacts', JSON.stringify(contacts));
-      alert('Cám ơn ' + name + '! Chúng tôi đã nhận được tin nhắn.');
-      this.reset();
+
+      status.textContent = "✅ Cám ơn " + name + "! Chúng tôi sẽ liên hệ qua số " + phone + ".";
+      status.className = "form-status success";
+      form.reset();
     });
   </script>
 </body>

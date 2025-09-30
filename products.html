@@ -7,28 +7,91 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="header">
-    <div class="container">
+    <header class="header">
+    <div class="container header-inner">
       <div class="brand">
-        <div class="logo">PL</div>
+        <div class="logo" style="padding:0;overflow:hidden;display:flex;align-items:center;justify-content:center">
+          <a href="index.html" style="display:block;width:100%;height:100%">
+            <img src="Image/Logo.jpg" alt="Logo PPTLaptop" style="width:100%;height:100%;object-fit:contain;" />
+          </a>
+        </div>
         <div>
-          <div style="font-weight:700">PPTLaptop</div>
-          <div style="font-size:12px;color:var(--muted)">Mua laptop - giao tận nơi</div>
+          <div class="brand-title">PPTStore</div>
+          <div class="brand-sub">Mua laptop - giao tận nơi</div>
         </div>
       </div>
-      <nav>
+
+      <nav class="nav">
         <a href="index.html">Trang chủ</a>
-        <a href="products.html">Sản phẩm</a>
+        <div class="dropdown">
+          <a href="products.html" class="dropdown-toggle active">Sản phẩm</a>
+          <div class="dropdown-menu mega-menu">
+            <div class="mega-col">
+              <div class="mega-title">Laptop Dell</div>
+              <a href="#">Dell Alienware</a>
+              <a href="#">Dell Precision</a>
+              <a href="#">Dell XPS</a>
+              <a href="#">Dell Vostro</a>
+              <a href="#">Dell Inspiron</a>
+              <a href="#">Dell Latitude</a>
+              <a href="#">Dell G-Seri</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-title">Laptop Acer</div>
+              <a href="#">Acer Aspire</a>
+              <a href="#">Acer Nitro</a>
+              <a href="#">Acer Spin</a>
+              <a href="#">Acer Predator</a>
+              <a href="#">Acer Swift</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-title">Laptop Asus</div>
+              <a href="#">Asus Tuf</a>
+              <a href="#">Asus ZenBook</a>
+              <a href="#">Asus VivoBook</a>
+              <a href="#">Asus Rog</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-title">Laptop Lenovo</div>
+              <a href="#">Lenovo Ideapad</a>
+              <a href="#">Lenovo ThinkBook</a>
+              <a href="#">Lenovo Yoga</a>
+              <a href="#">Lenovo Legion</a>
+              <a href="#">Lenovo Thinkpad</a>
+              <a href="#">Lenovo LOQ</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-title">Laptop HP</div>
+              <a href="#">HP Elitebook</a>
+              <a href="#">HP Spectre</a>
+              <a href="#">HP Pavilion</a>
+              <a href="#">HP Probook</a>
+              <a href="#">HP Omen</a>
+              <a href="#">HP Envy</a>
+              <a href="#">HP Zbook</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-title">Laptop MSI</div>
+              <a href="#">MSI G-Seri</a>
+              <a href="#">MSI Bravo</a>
+              <a href="#">MSI Modern</a>
+            </div>
+          </div>
+        </div>
         <a href="contact.html">Liên hệ</a>
-        <a href="cart.html">Giỏ hàng</a>
+        <a href="Login.html" id="login-link">Đăng nhập/Đăng ký</a>
+        <span id="user-info" class="user-info"></span>
+        <a href="cart.html">🛒 Giỏ (<span id="cart-count">0</span>)</a>
+        <a href="#" id="logout-link" class="logout">Đăng xuất</a>
       </nav>
     </div>
   </header>
 
-  <main class="container">
-    <h3>Danh sách sản phẩm</h3>
+<main class="container">
+  <h2 class="section-title">Danh sách sản phẩm</h2>
+  <p class="text-muted">Chọn lọc các mẫu laptop mới nhất, giá tốt tại PPTLaptop</p>
 
-    <div class="controls">
+    <div class="controls" style="flex-wrap:wrap;gap:12px;align-items:center;display:flex;">
       <select id="filter-brand" class="select">
         <option value="">Tất cả hãng</option>
       </select>
@@ -39,8 +102,13 @@
         <option value="price-desc">Giá: Cao → Thấp</option>
       </select>
 
-      <input id="filter-min" class="input" placeholder="Giá từ (VNĐ)" />
-      <input id="filter-max" class="input" placeholder="Giá đến (VNĐ)" />
+      <div style="display:flex;align-items:center;gap:8px;min-width:220px;">
+        <label for="price-range" style="font-size:14px;color:#555">Giá:</label>
+        <span id="price-min-label">0</span>
+        <input type="range" id="price-range" min="0" max="100000000" step="500000" value="0" style="flex:1" />
+        <span id="price-max-label">100tr+</span>
+      </div>
+
       <input id="q" class="input" placeholder="Tìm kiếm..." style="flex:1" />
       <button class="btn" id="apply-filter">Áp dụng</button>
     </div>
@@ -48,51 +116,76 @@
     <div class="grid" id="all-products"></div>
   </main>
 
+
   <footer>
-  <div class="container footer-grid">
-    <div>
-      <h4>Liên hệ</h4>
-      <p>📞 0971 476 878</p>
-      <p>📧 pptlaptop@gmail.com</p>
-    </div>
-    <div>
-      <h4>Địa chỉ</h4>
-      <p class="small text-muted">06 Trần Văn Ơn, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam</p>
-      <div style="margin-top:8px">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.996246850356!2d106.6747335!3d10.979613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d1276f4b7577%3A0x54075879a0f2301!2s06%20Tr%E1%BA%A7n%20V%C4%83n%20%C6%A0n%2C%20Ph%C3%BA%20Ho%C3%A0%2C%20Th%E1%BB%A7%20D%E1%BA%A7u%20M%E1%BB%99t%2C%20B%C3%ACnh%20D%C6%B0%C6%A1ng%2C%20Vi%E1%BB%87t%20Nam!5e0!3m2!1svi!2s!4v1727111111111!5m2!1svi!2s"
-          width="250"
-          height="180"
-          style="border:0;border-radius:8px;"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h6>PPTLaptop</h6>
+            <p>Địa chỉ: 06 Trần Văn Ơn, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam</p>
+            <p>Hotline: 0971 476 878</p>
+            <p>Email: pptlaptop@gmail.com</p>
+            <div style="margin-top:8px">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.996246850356!2d106.6747335!3d10.979613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d1276f4b7577%3A0x54075879a0f2301!2s06%20Tr%E1%BA%A7n%20V%C4%83n%20%C6%A0n%2C%20Ph%C3%BA%20Ho%C3%A0%2C%20Th%E1%BB%A7%20D%E1%BA%A7u%20M%E1%BB%99t%2C%20B%C3%ACnh%20D%C6%B0%C6%A1ng%2C%20Vi%E1%BB%87t%20Nam!5e0!3m2!1svi!2s!4v1727111111111!5m2!1svi!2s"
+                width="250"
+                height="180"
+                style="border:0;border-radius:8px;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h6>THÔNG TIN CÔNG TY</h6>
+            <ul>
+              <li><a href="#">Giới thiệu công ty</a></li>
+              <li><a href="#">Tuyển dụng</a></li>
+              <li><a href="tel:0971476878">Gửi góp ý, khiếu nại</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h6>CHÍNH SÁCH CÔNG TY</h6>
+            <ul>
+              <li><a href="#">Chính sách chất lượng</a></li>
+              <li><a href="#">Chính sách bảo hành</a></li>
+              <li><a href="#">Chính sách đổi trả</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Phần bản quyền căn giữa -->
-  <div style="text-align:center; color:#888; margin:12px auto 0; font-size:13px; width:100%;">
-    &copy; 2025 PPTLaptop. All rights reserved.
-  </div>
-</footer>
-  <script>
-    const products = [
-      {id:1, name:'Asus TUF Gaming A15', brand:'Asus', price:24800000, desc:'Ryzen 7, 16GB RAM, RTX3050, 512GB SSD', img:'Image/Asus.webp'},
-      {id:2, name:'Dell Inspiron 15', brand:'Dell', price:16800000, desc:'Intel i5, 8GB RAM, 256GB SSD', img:'Image/LaptopDell.webp'},
-      {id:3, name:'HP Pavilion 14', brand:'HP', price:14900000, desc:'Intel i3, 8GB RAM, 256GB SSD', img:'Image/HP.jpg'},
-      {id:4, name:'MacBook Air M2', brand:'Apple', price:27900000, desc:'Apple M2, 8GB, 256GB SSD', img:'Image/MacBook.webp'},
-      {id:5, name:'Lenovo IdeaPad 3', brand:'Lenovo', price:11900000, desc:'Ryzen 5, 8GB RAM, 512GB SSD', img:'Image/Lenovo.webp'},
-      {id:6, name:'Asus Vivobook 15', brand:'Asus', price:12900000, desc:'Intel i5, 8GB RAM, 512GB SSD', img:'Image/Asus.webp'}
-    ];
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2025 PPTLaptop. All Rights Reserved</p>
+      </div>
+    </div>
+  </footer>
+
+
+
+  <script type="module">
+    // Cập nhật số lượng sản phẩm trong giỏ
+    function updateCartCount(){
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      let count = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+      document.getElementById('cart-count').innerText = count;
+    }
+
+    updateCartCount();
+    window.addEventListener('storage', updateCartCount);
+    import { products } from './products.js';
 
     const container = document.getElementById('all-products');
     const brandSelect = document.getElementById('filter-brand');
     const sortSelect = document.getElementById('sort');
     const qInput = document.getElementById('q');
-    const minInput = document.getElementById('filter-min');
-    const maxInput = document.getElementById('filter-max');
+  const priceRange = document.getElementById('price-range');
+  const priceMinLabel = document.getElementById('price-min-label');
+  const priceMaxLabel = document.getElementById('price-max-label');
 
     function money(v){ return v.toLocaleString('vi-VN') + ' ₫'; }
 
@@ -107,19 +200,36 @@
     function render(list){
       container.innerHTML = '';
       list.forEach(p=>{
-        const c = document.createElement('div'); c.className='card';
-        c.innerHTML = `
-          <img src="${p.img}" alt="${p.name}" />
-          <div class="title">${p.name}</div>
-          <div class="desc">${p.desc} <span class="small text-muted">(${p.brand})</span></div>
-          <div class="price-row">
-            <div class="price">${money(p.price)}</div>
-            <div>
-              <button class="btn secondary" onclick="view(${p.id})">Xem</button>
-              <button class="btn" onclick="add(${p.id})">Thêm</button>
+        let finalPrice = p.price;
+        let badge = '';
+        if(p.discount > 0){
+          finalPrice = Math.round(p.price * (100 - p.discount) / 100);
+          badge += `<span class="badge discount">-${p.discount}%</span>`;
+        }
+        if(p.stock === 0){
+          badge += `<span class="badge out">Hết hàng</span>`;
+        }
+
+          const c = document.createElement('div'); 
+          c.className='card';
+          c.innerHTML = `
+            <div class="img-wrap">
+              <img src="${p.img}" alt="${p.name}" />
+              <div class="badges">${badge}</div>
             </div>
-          </div>
-        `;
+            <div class="title">${p.name}</div>
+            <div class="desc">${p.desc} <span class="small text-muted">(${p.brand})</span></div>
+            <div style="font-size:13px;color:#555;margin-top:2px">${p.desc}</div>
+            <div class="price-row">
+              <div class="price">
+                ${p.discount > 0 ? `<span class="old-price">${money(p.price)}</span> ${money(finalPrice)}` : money(p.price)}
+              </div>
+              <div>
+                <button class="btn secondary" onclick="view(${p.id})">Xem</button>
+                <button class="btn" onclick="add(${p.id})" ${p.stock===0?'disabled':''}>Thêm</button>
+              </div>
+            </div>
+          `;
         container.appendChild(c);
       });
     }
@@ -128,12 +238,12 @@
       let list = products.slice();
       const brand = brandSelect.value;
       const q = qInput.value.trim().toLowerCase();
-      const min = parseInt(minInput.value.replace(/\D/g,'')) || 0;
-      const max = parseInt(maxInput.value.replace(/\D/g,'')) || Infinity;
+  const min = 0;
+  const max = parseInt(priceRange.value) || 0;
 
-      if(brand) list = list.filter(p=>p.brand===brand);
-      if(q) list = list.filter(p=> (p.name + ' ' + p.desc).toLowerCase().includes(q));
-      list = list.filter(p=> p.price >= min && p.price <= max);
+  if(brand) list = list.filter(p=>p.brand===brand);
+  if(q) list = list.filter(p=> (p.name + ' ' + p.desc).toLowerCase().includes(q));
+  if(max > 0) list = list.filter(p=> p.price <= max);
 
       const sort = sortSelect.value;
       if(sort === 'price-asc') list.sort((a,b)=>a.price-b.price);
@@ -143,18 +253,39 @@
     }
 
     function add(id){
+
       let cart = JSON.parse(localStorage.getItem('cart') || '[]');
       const p = products.find(x=>x.id===id);
       cart.push({...p, qty:1});
       localStorage.setItem('cart', JSON.stringify(cart));
       alert('Đã thêm: ' + p.name);
     }
+
     function view(id){ window.location.href = 'product-detail.html?id=' + id; }
 
-    document.getElementById('apply-filter').addEventListener('click', applyFilters);
+    // Đưa các hàm ra window để HTML gọi được
+    window.add = add;
+    window.view = view;
 
-    populateBrands();
-    render(products);
+  document.getElementById('apply-filter').addEventListener('click', applyFilters);
+
+  // Lọc sản phẩm theo tên khi nhập vào ô tìm kiếm
+  qInput.addEventListener('input', applyFilters);
+
+  // Lọc sản phẩm khi thay đổi giá tiền
+  priceRange.addEventListener('input', function(){
+    let v = parseInt(priceRange.value) || 0;
+    priceMaxLabel.innerText = v > 0 ? v.toLocaleString('vi-VN') + ' ₫' : '100tr+';
+    applyFilters();
+  });
+
+  // Khởi tạo nhãn giá
+  priceMinLabel.innerText = '0';
+  priceMaxLabel.innerText = '100tr+';
+
+  populateBrands();
+  render(products);
   </script>
+
 </body>
 </html>
