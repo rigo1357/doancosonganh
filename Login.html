@@ -43,23 +43,40 @@
 
         <div id="auth-msg"></div>
 
-        <!-- Login -->
-        <form id="login-form" class="auth-form">
+       <!-- ...existing code... -->
+             <!-- Login -->
+        <form id="login-form" class="auth-form" novalidate>
           <label for="login-email">Email</label>
           <input id="login-email" type="email" placeholder="email@gmail.com" required />
           <label for="login-password">Mật khẩu</label>
           <input id="login-password" type="password" placeholder="Mật khẩu" required />
           <button type="submit" class="btn">Đăng nhập</button>
+          <div style="margin-top:10px;text-align:right">
+            <a href="#" id="forgot-password-link" style="font-size:13px;color:#007bff;text-decoration:underline">Quên mật khẩu?</a>
+          </div>
         </form>
 
         <!-- Register -->
-        <form id="register-form" class="auth-form" style="display:none">
-          <label for="reg-email">Email</label>
-          <input id="reg-email" type="email" placeholder="email@gmail.com" required />
-          <label for="reg-password">Mật khẩu</label>
-          <input id="reg-password" type="password" placeholder="Mật khẩu (>=6 ký tự)" required />
-          <button type="submit" class="btn secondary">Đăng ký</button>
-        </form>
+<form id="register-form" class="auth-form" style="display:none" novalidate>
+  <label for="reg-email">Email</label>
+  <input id="reg-email" type="email" placeholder="email@gmail.com" required />
+
+  <label for="reg-password">Mật khẩu</label>
+  <input id="reg-password" type="password" placeholder="Mật khẩu (>=6 ký tự)" required />
+
+  <button type="submit" class="btn">Đăng ký</button>
+  <div style="margin:16px 0;text-align:center;">
+    <span>Hoặc đăng ký bằng</span>
+    <div class="social-group" style="margin-top:8px;display:flex;justify-content:center;gap:12px;">
+      <button type="button" class="btn social-btn google-btn" onclick="registerWithGoogle()">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" style="width:18px;vertical-align:middle;margin-right:6px;"> Google
+      </button>
+      <button type="button" class="btn social-btn facebook-btn" onclick="registerWithFacebook()">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg" alt="Facebook" style="width:18px;vertical-align:middle;margin-right:6px;"> Facebook
+      </button>
+    </div>
+  </div>
+</form>
 
         <!-- OTP -->
         <form id="otp-form" class="auth-form" style="display:none">
@@ -128,14 +145,31 @@
     }
 
     // --- Tabs ---
-    function showTab(t){
-      document.getElementById('tab-login').classList.toggle('active', t==='login');
-      document.getElementById('tab-register').classList.toggle('active', t==='register');
-      document.getElementById('login-form').style.display = t==='login' ? 'block' : 'none';
-      document.getElementById('register-form').style.display = t==='register' ? 'block' : 'none';
-      document.getElementById('otp-form').style.display = 'none';
-      document.getElementById('auth-msg').innerHTML = '';
+(function () {
+    const tLogin = document.getElementById('tab-login');
+    const tRegister = document.getElementById('tab-register');
+    const fLogin = document.getElementById('login-form');
+    const fRegister = document.getElementById('register-form');
+
+    function showLogin() {
+      tLogin.classList.add('active');
+      tRegister.classList.remove('active');
+      fLogin.style.display = '';
+      fRegister.style.display = 'none';
     }
+    function showRegister() {
+      tRegister.classList.add('active');
+      tLogin.classList.remove('active');
+      fRegister.style.display = '';
+      fLogin.style.display = 'none';
+    }
+
+    tLogin.addEventListener('click', showLogin);
+    tRegister.addEventListener('click', showRegister);
+
+    // prevent default submit for demo (remove in production)
+    [fLogin, fRegister].forEach(f => f.addEventListener('submit', e => e.preventDefault()));
+  })();
 
     let pendingUser = null; let otpCode = null;
 
@@ -211,6 +245,21 @@
     function showMsg(msg, success=false){
       document.getElementById('auth-msg').innerHTML = `<div class="${success ? 'auth-success' : 'auth-msg'}">${msg}</div>`;
     }
+
+    // --- Đăng ký Google/Facebook (demo) ---
+    function registerWithGoogle() {
+      showMsg('Chức năng đăng ký bằng Google đang được phát triển.', false);
+    }
+    function registerWithFacebook() {
+      showMsg('Chức năng đăng ký bằng Facebook đang được phát triển.', false);
+    }
+
+    // --- Quên mật khẩu (demo) ---
+    document.getElementById('forgot-password-link').onclick = function(e){
+      e.preventDefault();
+      showMsg('Vui lòng liên hệ admin qua email để lấy lại mật khẩu.', false);
+    };
+
   </script>
 </body>
 </html>

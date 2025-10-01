@@ -1,25 +1,174 @@
-/* Dành cho Login.html */
-body{background:var(--bg);margin:0;font-family:inherit}
-.auth-container{display:flex;justify-content:center;align-items:center;min-height:70vh;}
-.auth-card{
-  background:#fff;
-  padding:24px;
-  border-radius:12px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.08);
-  width:100%;
-  max-width:380px;
+/* ...existing code... */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
 }
-.auth-tabs{display:flex;gap:12px;margin-bottom:16px;}
-.auth-tab{flex:1;text-align:center;padding:10px;cursor:pointer;border-radius:8px;background:#f8f9fb;}
-.auth-tab.active{background:var(--primary);color:#fff;font-weight:600;}
-.auth-form{display:flex;flex-direction:column;gap:8px}
-.auth-form label{font-size:13px;color:var(--muted)}
-.auth-form input{
-  padding:10px;border-radius:8px;border:1px solid #e6e9ee;background:#fff;
-  outline:none
+
+.auth-card {
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 380px;
 }
-.auth-form button{margin-top:8px;padding:10px;border-radius:8px;border:none;background:var(--primary);color:#fff;cursor:pointer}
-.auth-msg{margin:8px 0;padding:8px;border-radius:8px;background:#fff;border:1px solid #eee}
-.auth-success{background:#ecfdf5;color:#064e3b;border:1px solid #b7f5d6;padding:10px}
-.user-info{margin:0 6px;font-size:14px;color:var(--primary);}
-.logout{color:#d32f2f;font-weight:500;}
+
+.auth-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.auth-tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  background: #f8f9fb;
+  transition: background 0.2s, color 0.2s;
+}
+
+.auth-tab.active {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+
+.auth-form label {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+
+.auth-form input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e6e9ee;
+  background: #fff;
+  outline: none;
+  font-size: 15px;
+  transition: border 0.2s;
+}
+
+.auth-form input:focus {
+  border: 1.5px solid var(--primary);
+}
+
+.auth-form button {
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.auth-form button,
+.social-btn {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.auth-form button.secondary {
+  background: #1877f3;
+}
+
+.auth-form button:hover {
+  background: #0056b3;
+}
+
+.auth-msg {
+  margin: 8px 0;
+  padding: 8px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #eee;
+}
+
+.auth-success {
+  background: #ecfdf5;
+  color: #064e3b;
+  border: 1px solid #b7f5d6;
+  padding: 10px;
+}
+
+.user-info {
+  margin: 0 6px;
+  font-size: 14px;
+  color: var(--primary);
+}
+
+.logout {
+  color: #d32f2f;
+  font-weight: 500;
+}
+
+/* Nút mạng xã hội */
+.social-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #e6e9ee;
+  background: #fff;
+  color: #444;
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s, border 0.2s;
+}
+
+.google-btn {
+  border: 1px solid #e6e9ee;
+  background: #fff;
+  color: #444;
+}
+
+.google-btn:hover {
+  background: #f5f5f5;
+  border-color: #4285f4;
+}
+
+.facebook-btn {
+  border: 1px solid #1877f3;
+  background: #1877f3;
+  color: #fff;
+}
+
+.facebook-btn:hover {
+  background: #1456b3;
+  border-color: #1456b3;
+}
+
+/* Responsive cho mobile */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 12px;
+    max-width: 98vw;
+  }
+  .auth-tabs {
+    gap: 6px;
+  }
+  .auth-form button,
+  .social-btn {
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+}
+/* ...existing code... */
